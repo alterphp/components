@@ -1,5 +1,14 @@
-Some components I use in my developments
+AlterPHP Components
+====================
 
-- AlterPHP\Component\HttpFoundation\CookieRedirectionResponse
-  => depends on Symfony\Component\HttpFoundation\RedirectResponse
-            and Symfony\Component\HttpFoundation\Cookie
+Some components I use in my developments (mostly on Symfony2)
+
+Components list
+--------------------
+
+* AlterPHP\Component\HttpFoundation\CookieRedirectionResponse :
+Based on Symfony2 components, this class provides a simple RedirectResponse object
+with the ability to send cookies to the client.
+This component has following dependencies :
+** Symfony\Component\HttpFoundation\RedirectResponse
+** Symfony\Component\HttpFoundation\Cookie
