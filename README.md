@@ -32,6 +32,9 @@ Then run :
 Finally, in app/autoload.php, make the following add :
 
 ```php
+<?php
+
+// ...
 
 $loader->registerNamespaces(array (
     'Symfony' => array (__DIR__ . '/../vendor/symfony/src', __DIR__ . '/../vendor/bundles'),
