@@ -6,10 +6,10 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * CookieRedirectResponse represents an HTTP response doing a redirect and sending cookies
+ * RedirectResponseWithCookie represents an HTTP response doing a redirect and sending cookies
  * @author     pcb <pc.bertineau@alterphp.com>
  */
-class CookieRedirectResponse extends RedirectResponse
+class RedirectResponseWithCookie extends RedirectResponse
 {
 
    /**
