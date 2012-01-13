@@ -1,10 +1,9 @@
 <?php
 
-require_once __DIR__.'/src/AlterPHP/Component/HttpFoundation/RedirectResponseWithCookie.php';
-
 namespace AlterPHP\Tests\Component\HttpFoundation;
 
 use AlterPHP\Component\HttpFoundation\RedirectResponseWithCookie;
+use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * RedirectResponseWithCookie represents an HTTP response doing a redirect and sending cookies
@@ -12,29 +11,21 @@ use AlterPHP\Component\HttpFoundation\RedirectResponseWithCookie;
  */
 class RedirectResponseWithCookieTest extends \PHPUnit_Framework_TestCase
 {
-   
-    public function testIsRedirectAndHasCookieRedirectionWithCookie()
-    {
-       //TODO: Ajouter les Cookie
 
-        foreach (array(301, 302, 303, 307) as $code)
-        {
-            $response = new RedirectResponseWithCookie('', $code);
-            $this->assertTrue($response->isRedirection());
-            $this->assertTrue($response->isRedirect());
-        }
+   public function testIsRedirectAndHasCookieRedirectionWithCookie()
+   {
+      $url = '/';
+      $cookie = new Cookie('test_cookie_name', 'test_cookie_value', 0, $url, 'test_cookie_domain');
 
-        //TODO : expect \InvalidArgumentException
-        $response = new RedirectResponseWithCookie('', 304);
+      foreach (array (301, 302, 303, 307) as $code)
+      {
+         $response = new RedirectResponseWithCookie($url, $code, array($cookie));
+         $this->assertTrue($response->isRedirection());
+         $this->assertTrue($response->isRedirect());
 
-        //TODO : expect \InvalidArgumentException
-        $response = new RedirectResponseWithCookie('', 200);
+         $responseCookies = $response->headers->getCookies();
+         $this->assertEquals($cookie, $responseCookies[0]);
+      }
+   }
 
-        //TODO : expect \InvalidArgumentException
-        $response = new RedirectResponseWithCookie('', 404);
-
-        $response = new RedirectResponseWithCookie('', 301, array('Location' => '/good-uri'));
-        $this->assertFalse($response->isRedirect('/bad-uri'));
-        $this->assertTrue($response->isRedirect('/good-uri'));
-    }
 }

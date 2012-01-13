@@ -18,14 +18,14 @@ if (!class_exists('PHPUnit_Framework_MockObject_MockBuilder')) {
 define('TESTS_PATH', __DIR__);
 define('VENDOR_PATH', realpath(__DIR__ . '/../vendor'));
 
-$classLoaderFile = VENDOR_PATH . '/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+$classLoaderFile = VENDOR_PATH . '/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 if (!file_exists($classLoaderFile)) {
     die('cannot find vendor, run: php bin/vendors.php');
 }
 require_once $classLoaderFile;
 $loader = new Symfony\Component\ClassLoader\UniversalClassLoader;
 $loader->registerNamespaces(array(
-    'Symfony' => VENDOR_PATH . '/symfony/src',
+    'Symfony' => VENDOR_PATH,
     'AlterPHP\\Tests' => __DIR__,
     'AlterPHP' => __DIR__ . '/../src',
 ));
