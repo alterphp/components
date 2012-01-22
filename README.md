@@ -3,6 +3,7 @@ AlterPHP Components
 
 Some components I use in my developments (mostly with Symfony2)
 
+[![Build Status](https://secure.travis-ci.org/alterphp/components.png?branch=master)](http://travis-ci.org/alterphp/components)
 
 Components list
 --------------------
