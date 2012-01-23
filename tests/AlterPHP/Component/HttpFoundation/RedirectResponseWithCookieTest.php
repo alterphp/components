@@ -30,12 +30,13 @@ class RedirectResponseWithCookieTest extends \PHPUnit_Framework_TestCase
 
    public function testThrowInvalidArgumentExceptionRedirectionWithCookie()
    {
+      $url = '/';
       $invalidCookie = 'test_cookie_name';
 
       $this->setExpectedException(
          'InvalidArgumentException', 'One of third parameter array is not a valid Cookie object.'
       );
-      $response = new RedirectResponseWithCookie($url, $code, array ($invalidCookie));
+      $response = new RedirectResponseWithCookie($url, 302, array ($invalidCookie));
    }
 
 }
