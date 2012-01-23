@@ -19,13 +19,23 @@ class RedirectResponseWithCookieTest extends \PHPUnit_Framework_TestCase
 
       foreach (array (301, 302, 303, 307) as $code)
       {
-         $response = new RedirectResponseWithCookie($url, $code, array($cookie));
+         $response = new RedirectResponseWithCookie($url, $code, array ($cookie));
          $this->assertTrue($response->isRedirection());
          $this->assertTrue($response->isRedirect());
 
          $responseCookies = $response->headers->getCookies();
          $this->assertEquals($cookie, $responseCookies[0]);
       }
+   }
+
+   public function testThrowInvalidArgumentExceptionRedirectionWithCookie()
+   {
+      $invalidCookie = 'test_cookie_name';
+
+      $this->setExpectedException(
+         'InvalidArgumentException', 'One of third parameter array is not a valid Cookie object.'
+      );
+      $response = new RedirectResponseWithCookie($url, $code, array ($invalidCookie));
    }
 
 }

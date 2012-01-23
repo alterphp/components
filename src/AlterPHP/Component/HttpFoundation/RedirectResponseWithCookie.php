@@ -27,7 +27,7 @@ class RedirectResponseWithCookie extends RedirectResponse
       {
          if (!$cookie instanceof Cookie)
          {
-            throw new \InvalidArgumentException(sprintf('Third parameter is not a valid Cookie object.'));
+            throw new \InvalidArgumentException(sprintf('One of third parameter array is not a valid Cookie object.'));
          }
          $this->headers->setCookie($cookie);
       }
