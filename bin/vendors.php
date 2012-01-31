@@ -10,8 +10,8 @@ if (!is_dir(VENDOR_PATH)) {
 }
 
 $deps = array(
-    array('Symfony/Component/ClassLoader', 'http://github.com/symfony/ClassLoader.git', 'v2.0.7'),
-    array('Symfony/Component/HttpFoundation', 'http://github.com/symfony/HttpFoundation.git', 'v2.0.7'),
+    array('Symfony/Component/ClassLoader', 'http://github.com/symfony/ClassLoader.git', 'master'),
+    array('Symfony/Component/HttpFoundation', 'http://github.com/symfony/HttpFoundation.git', 'master'),
 );
 
 foreach ($deps as $dep) {
