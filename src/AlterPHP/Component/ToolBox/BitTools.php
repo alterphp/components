@@ -5,6 +5,7 @@
  *
  * @package    AlterPHP.Component
  * @subpackage ToolBox
+ * @author     pcb <pc.bertineau@alterphp.com>
  */
 
 namespace AlterPHP\Component\ToolBox;

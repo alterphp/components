@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * RedirectResponseWithCookie represents an HTTP response doing a redirect and sending cookies
+ *
+ * @package    AlterPHP.Component
+ * @subpackage HttpFoundation
  * @author     pcb <pc.bertineau@alterphp.com>
  */
 class RedirectResponseWithCookie extends RedirectResponse
