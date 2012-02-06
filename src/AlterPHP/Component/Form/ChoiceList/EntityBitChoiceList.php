@@ -5,12 +5,12 @@ namespace AlterPHP\Component\Form\ChoiceList;
 use Symfony\Component\Form\Util\PropertyPath;
 use Symfony\Component\Form\Exception\FormException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ArrayChoiceList;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\NoResultException;
 
-class EntityBitChoiceList extends ArrayChoiceList
+class EntityBitChoiceList extends ObjectChoiceList
 {
 
    /**
