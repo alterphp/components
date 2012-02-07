@@ -30,6 +30,7 @@ class BitToolsTest extends \PHPUnit_Framework_TestCase
       {
          $expectValue2 += pow(2, $bitPower);
       }
+      var_dump($expectValue2, $testValue2, $returnedArray2);
       $this->assertEquals($expectValue2, $testValue2);
 
       $testValue3 = 2048;
