@@ -23,14 +23,13 @@ class BitToolsTest extends \PHPUnit_Framework_TestCase
       }
       $this->assertEquals($expectValue1, $testValue1);
 
-      $testValue2 = 444555666777;
+      $testValue2 = 444555666;
       $returnedArray2 = BitTools::getBitArrayFromInt($testValue2);
       $expectValue2 = 0;
       foreach($returnedArray2 as $bitPower)
       {
          $expectValue2 += pow(2, $bitPower);
       }
-      var_dump($expectValue2, $testValue2, $returnedArray2);
       $this->assertEquals($expectValue2, $testValue2);
 
       $testValue3 = 2048;
