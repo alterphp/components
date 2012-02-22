@@ -202,7 +202,7 @@ class EntityBitChoiceList extends ArrayChoiceList
             $value = (string) $entity;
          }
 
-         $bitPower = $this->bitPowerPropertyPath->getValue($entity);
+         $bitPower = $this->getBitPowerValue($entity);
 
          if (null === $group)
          {

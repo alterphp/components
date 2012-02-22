@@ -13,6 +13,7 @@ $deps = array(
     array('Symfony', 'http://github.com/symfony/symfony.git', '3e9d937eb8fedb8a585559e04311ee9a39db421f'),
     array('Doctrine/ORM', 'https://github.com/doctrine/doctrine2.git', 'master'),
     array('Doctrine/Common', 'https://github.com/doctrine/common.git', 'master'),
+    array('Doctrine/DBAL', 'https://github.com/doctrine/dbal.git', 'master'),
 );
 
 foreach ($deps as $dep) {

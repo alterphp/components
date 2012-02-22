@@ -27,7 +27,6 @@ class EntityBitType extends AbstractType
 
    public function buildForm(FormBuilder $builder, array $options)
    {
-
       if ($options['multiple'])
       {
          $builder->prependClientTransformer(new EntityBitsToArrayTransformer($options['choice_list']));

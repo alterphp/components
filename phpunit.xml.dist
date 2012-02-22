@@ -13,7 +13,7 @@
 >
     <testsuites>
         <testsuite name="AlterPHP Components Test Suite">
-            <directory>./tests/AlterPHP/Component/</directory>
+            <directory>./tests/AlterPHP/Tests/Component/</directory>
         </testsuite>
     </testsuites>
 
