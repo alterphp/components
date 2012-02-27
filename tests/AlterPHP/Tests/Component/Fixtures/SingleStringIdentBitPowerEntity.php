@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 
 /** @Entity */
-class SingleStringIdentEntity
+class SingleStringIdentBitPowerEntity
 {
 
    /** @Id @Column(type="string") */

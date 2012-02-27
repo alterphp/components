@@ -37,7 +37,7 @@ class EntityBitTypeTest extends TypeTestCase
       $schemaTool = new SchemaTool($this->em);
       $classes = array (
               $this->em->getClassMetadata(self::SINGLE_IDENT_BIT_POWER_CLASS),
-              // $this->em->getClassMetadata(self::SINGLE_STRING_IDENT_BIT_POWER_CLASS),
+              $this->em->getClassMetadata(self::SINGLE_STRING_IDENT_BIT_POWER_CLASS),
               $this->em->getClassMetadata(self::COMPOSITE_IDENT_BIT_POWER_CLASS),
               $this->em->getClassMetadata(self::COMPOSITE_STRING_IDENT_BIT_POWER_CLASS),
       );
@@ -267,7 +267,6 @@ class EntityBitTypeTest extends TypeTestCase
       $this->persist(array ($entity1, $entity2, $entity3));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
-              'multiple' => true,
               'expanded' => false,
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
@@ -292,7 +291,6 @@ class EntityBitTypeTest extends TypeTestCase
       $this->persist(array ($entity1, $entity2, $entity3));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
-              'multiple' => true,
               'expanded' => false,
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
@@ -321,7 +319,6 @@ class EntityBitTypeTest extends TypeTestCase
       $this->persist(array ($entity1, $entity2, $entity3));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
-              'multiple' => true,
               'expanded' => false,
               'em' => 'default',
               'class' => self::COMPOSITE_IDENT_BIT_POWER_CLASS,
@@ -347,7 +344,6 @@ class EntityBitTypeTest extends TypeTestCase
       $this->persist(array ($entity1, $entity2, $entity3));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
-              'multiple' => true,
               'expanded' => false,
               'em' => 'default',
               'class' => self::COMPOSITE_IDENT_BIT_POWER_CLASS,
@@ -367,246 +363,256 @@ class EntityBitTypeTest extends TypeTestCase
       $this->assertEquals(array (0, 3), $field->getClientData());
    }
 
-   /*
-     public function testSubmitSingleExpanded()
-     {
-     $entity1 = new SingleIdentBitPowerEntity(1, 'Foo');
-     $entity2 = new SingleIdentBitPowerEntity(2, 'Bar');
+   public function testSubmitSingleExpanded()
+   {
+      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 4);
+      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 2);
 
-     $this->persist(array ($entity1, $entity2));
+      $this->persist(array ($entity1, $entity2));
 
-     $field = $this->factory->createNamed('entitybit', 'name', null, array (
-     'multiple' => false,
-     'expanded' => true,
-     'em' => 'default',
-     'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
-     'property' => 'name',
-     ));
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'multiple' => false,
+              'em' => 'default',
+              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'property' => 'name',
+         ));
 
-     $field->bind('2');
+      $field->bind('2');
 
-     $this->assertTrue($field->isSynchronized());
-     $this->assertEquals($entity2, $field->getData());
-     $this->assertSame(false, $field['1']->getData());
-     $this->assertSame(true, $field['2']->getData());
-     $this->assertSame('', $field['1']->getClientData());
-     $this->assertSame('1', $field['2']->getClientData());
-     }
+      $this->assertTrue($field->isSynchronized());
+      $this->assertEquals(4, $field->getData());
+      $this->assertSame(false, $field['4']->getData());
+      $this->assertSame(true, $field['2']->getData());
+      $this->assertSame('', $field['4']->getClientData());
+      $this->assertSame('1', $field['2']->getClientData());
+   }
 
-     public function testSubmitMultipleExpanded()
-     {
-     $entity1 = new SingleIdentBitPowerEntity(1, 'Foo');
-     $entity2 = new SingleIdentBitPowerEntity(2, 'Bar');
-     $entity3 = new SingleIdentBitPowerEntity(3, 'Bar');
+   public function testSubmitMultipleExpanded()
+   {
+      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 0);
+      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 1);
+      $entity3 = new SingleIdentBitPowerEntity(3, 'Bar', 2);
 
-     $this->persist(array ($entity1, $entity2, $entity3));
+      $this->persist(array ($entity1, $entity2, $entity3));
 
-     $field = $this->factory->createNamed('entitybit', 'name', null, array (
-     'multiple' => true,
-     'expanded' => true,
-     'em' => 'default',
-     'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
-     'property' => 'name',
-     ));
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'em' => 'default',
+              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'property' => 'name',
+         ));
 
-     $field->bind(array ('1' => '1', '3' => '3'));
+      $field->bind(array ('0' => '0', '2' => '2'));
 
-     $expected = new ArrayCollection(array ($entity1, $entity3));
+      $expected = 5;
 
-     $this->assertTrue($field->isSynchronized());
-     $this->assertEquals($expected, $field->getData());
-     $this->assertSame(true, $field['1']->getData());
-     $this->assertSame(false, $field['2']->getData());
-     $this->assertSame(true, $field['3']->getData());
-     $this->assertSame('1', $field['1']->getClientData());
-     $this->assertSame('', $field['2']->getClientData());
-     $this->assertSame('1', $field['3']->getClientData());
-     }
+      $this->assertTrue($field->isSynchronized());
+      $this->assertEquals($expected, $field->getData());
+      $this->assertSame(true, $field['0']->getData());
+      $this->assertSame(false, $field['1']->getData());
+      $this->assertSame(true, $field['2']->getData());
+      $this->assertSame('1', $field['0']->getClientData());
+      $this->assertSame('', $field['1']->getClientData());
+      $this->assertSame('1', $field['2']->getClientData());
+   }
 
-     public function testOverrideChoices()
-     {
-     $entity1 = new SingleIdentBitPowerEntity(1, 'Foo');
-     $entity2 = new SingleIdentBitPowerEntity(2, 'Bar');
-     $entity3 = new SingleIdentBitPowerEntity(3, 'Baz');
+   public function testOverrideChoices()
+   {
+      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 2);
+      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 3);
+      $entity3 = new SingleIdentBitPowerEntity(3, 'Baz', 4);
 
-     $this->persist(array ($entity1, $entity2, $entity3));
+      $this->persist(array ($entity1, $entity2, $entity3));
 
-     $field = $this->factory->createNamed('entitybit', 'name', null, array (
-     'em' => 'default',
-     'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
-     // not all persisted entities should be displayed
-     'choices' => array ($entity1, $entity2),
-     'property' => 'name',
-     ));
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'em' => 'default',
+              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'multiple' => false,
+              'expanded' => false,
+              // not all persisted entities should be displayed
+              'choices' => array ($entity1, $entity2),
+              'property' => 'name',
+         ));
 
-     $field->bind('2');
+      $field->bind('3');
 
-     $this->assertEquals(array (1 => 'Foo', 2 => 'Bar'), $field->createView()->get('choices'));
-     $this->assertTrue($field->isSynchronized());
-     $this->assertEquals($entity2, $field->getData());
-     $this->assertEquals(2, $field->getClientData());
-     }
+      $this->assertEquals(array (2 => 'Foo', 3 => 'Bar'), $field->createView()->get('choices'));
+      $this->assertTrue($field->isSynchronized());
+      $this->assertEquals(8, $field->getData());
+      $this->assertEquals(3, $field->getClientData());
+   }
 
-     public function testDisallowChoicesThatAreNotIncluded_choicesSingleIdentifier()
-     {
-     $entity1 = new SingleIdentBitPowerEntity(1, 'Foo');
-     $entity2 = new SingleIdentBitPowerEntity(2, 'Bar');
-     $entity3 = new SingleIdentBitPowerEntity(3, 'Baz');
+   public function testDisallowChoicesThatAreNotIncluded_choicesSingleIdentifier()
+   {
+      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 0);
+      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 1);
+      $entity3 = new SingleIdentBitPowerEntity(3, 'Baz', 2);
 
-     $this->persist(array ($entity1, $entity2, $entity3));
+      $this->persist(array ($entity1, $entity2, $entity3));
 
-     $field = $this->factory->createNamed('entitybit', 'name', null, array (
-     'em' => 'default',
-     'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
-     'choices' => array ($entity1, $entity2),
-     'property' => 'name',
-     ));
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'em' => 'default',
+              'multiple' => false,
+              'expanded' => false,
+              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'choices' => array ($entity1, $entity2),
+              'property' => 'name',
+         ));
 
-     $field->bind('3');
+      $field->bind('2');
 
-     $this->assertFalse($field->isSynchronized());
-     $this->assertNull($field->getData());
-     }
+      $this->assertFalse($field->isSynchronized());
+      $this->assertNull($field->getData());
+   }
 
-     public function testDisallowChoicesThatAreNotIncluded_choicesCompositeIdentifier()
-     {
-     $entity1 = new CompositeIdentBitPowerEntity(10, 20, 'Foo');
-     $entity2 = new CompositeIdentBitPowerEntity(30, 40, 'Bar');
-     $entity3 = new CompositeIdentBitPowerEntity(50, 60, 'Baz');
+   public function testDisallowChoicesThatAreNotIncluded_choicesCompositeIdentifier()
+   {
+      $entity1 = new CompositeIdentBitPowerEntity(10, 20, 'Foo', 0);
+      $entity2 = new CompositeIdentBitPowerEntity(30, 40, 'Bar', 1);
+      $entity3 = new CompositeIdentBitPowerEntity(50, 60, 'Baz', 2);
 
-     $this->persist(array ($entity1, $entity2, $entity3));
+      $this->persist(array ($entity1, $entity2, $entity3));
 
-     $field = $this->factory->createNamed('entitybit', 'name', null, array (
-     'em' => 'default',
-     'class' => self::COMPOSITE_IDENT_BIT_POWER_CLASS,
-     'choices' => array ($entity1, $entity2),
-     'property' => 'name',
-     ));
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'em' => 'default',
+              'multiple' => false,
+              'expanded' => false,
+              'class' => self::COMPOSITE_IDENT_BIT_POWER_CLASS,
+              'choices' => array ($entity1, $entity2),
+              'property' => 'name',
+         ));
 
-     $field->bind('2');
+      $field->bind('2');
 
-     $this->assertFalse($field->isSynchronized());
-     $this->assertNull($field->getData());
-     }
+      $this->assertFalse($field->isSynchronized());
+      $this->assertNull($field->getData());
+   }
 
-     public function testDisallowChoicesThatAreNotIncludedQueryBuilderSingleIdentifier()
-     {
-     $entity1 = new SingleIdentBitPowerEntity(1, 'Foo');
-     $entity2 = new SingleIdentBitPowerEntity(2, 'Bar');
-     $entity3 = new SingleIdentBitPowerEntity(3, 'Baz');
+   public function testDisallowChoicesThatAreNotIncludedQueryBuilderSingleIdentifier()
+   {
+      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 0);
+      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 1);
+      $entity3 = new SingleIdentBitPowerEntity(3, 'Baz', 2);
 
-     $this->persist(array ($entity1, $entity2, $entity3));
+      $this->persist(array ($entity1, $entity2, $entity3));
 
-     $repository = $this->em->getRepository(self::SINGLE_IDENT_BIT_POWER_CLASS);
+      $repository = $this->em->getRepository(self::SINGLE_IDENT_BIT_POWER_CLASS);
 
-     $field = $this->factory->createNamed('entitybit', 'name', null, array (
-     'em' => 'default',
-     'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
-     'query_builder' => $repository->createQueryBuilder('e')
-     ->where('e.id IN (1, 2)'),
-     'property' => 'name',
-     ));
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'em' => 'default',
+              'multiple' => false,
+              'expanded' => false,
+              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'query_builder' => $repository->createQueryBuilder('e')
+                 ->where('e.id IN (1, 2)'),
+              'property' => 'name',
+         ));
 
-     $field->bind('3');
+      $field->bind('2');
 
-     $this->assertFalse($field->isSynchronized());
-     $this->assertNull($field->getData());
-     }
+      $this->assertFalse($field->isSynchronized());
+      $this->assertNull($field->getData());
+   }
 
-     public function testDisallowChoicesThatAreNotIncludedQueryBuilderAsClosureSingleIdentifier()
-     {
-     $entity1 = new SingleIdentBitPowerEntity(1, 'Foo');
-     $entity2 = new SingleIdentBitPowerEntity(2, 'Bar');
-     $entity3 = new SingleIdentBitPowerEntity(3, 'Baz');
+   public function testDisallowChoicesThatAreNotIncludedQueryBuilderAsClosureSingleIdentifier()
+   {
+      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 0);
+      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 1);
+      $entity3 = new SingleIdentBitPowerEntity(3, 'Baz', 2);
 
-     $this->persist(array ($entity1, $entity2, $entity3));
+      $this->persist(array ($entity1, $entity2, $entity3));
 
-     $field = $this->factory->createNamed('entitybit', 'name', null, array (
-     'em' => 'default',
-     'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
-     'query_builder' => function ($repository)
-     {
-     return $repository->createQueryBuilder('e')
-     ->where('e.id IN (1, 2)');
-     },
-     'property' => 'name',
-     ));
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'em' => 'default',
+              'multiple' => false,
+              'expanded' => false,
+              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'query_builder' => function ($repository)
+              {
+                 return $repository->createQueryBuilder('e')
+                       ->where('e.id IN (1, 2)');
+              },
+              'property' => 'name',
+         ));
 
-     $field->bind('3');
+      $field->bind('2');
 
-     $this->assertFalse($field->isSynchronized());
-     $this->assertNull($field->getData());
-     }
+      $this->assertFalse($field->isSynchronized());
+      $this->assertNull($field->getData());
+   }
 
-     public function testDisallowChoicesThatAreNotIncludedQueryBuilderAsClosureCompositeIdentifier()
-     {
-     $entity1 = new CompositeIdentBitPowerEntity(10, 20, 'Foo');
-     $entity2 = new CompositeIdentBitPowerEntity(30, 40, 'Bar');
-     $entity3 = new CompositeIdentBitPowerEntity(50, 60, 'Baz');
+   public function testDisallowChoicesThatAreNotIncludedQueryBuilderAsClosureCompositeIdentifier()
+   {
+      $entity1 = new CompositeIdentBitPowerEntity(10, 20, 'Foo', 0);
+      $entity2 = new CompositeIdentBitPowerEntity(30, 40, 'Bar', 1);
+      $entity3 = new CompositeIdentBitPowerEntity(50, 60, 'Baz', 2);
 
-     $this->persist(array ($entity1, $entity2, $entity3));
+      $this->persist(array ($entity1, $entity2, $entity3));
 
-     $field = $this->factory->createNamed('entitybit', 'name', null, array (
-     'em' => 'default',
-     'class' => self::COMPOSITE_IDENT_BIT_POWER_CLASS,
-     'query_builder' => function ($repository)
-     {
-     return $repository->createQueryBuilder('e')
-     ->where('e.id1 IN (10, 50)');
-     },
-     'property' => 'name',
-     ));
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'em' => 'default',
+              'multiple' => false,
+              'expanded' => false,
+              'class' => self::COMPOSITE_IDENT_BIT_POWER_CLASS,
+              'query_builder' => function ($repository)
+              {
+                 return $repository->createQueryBuilder('e')
+                       ->where('e.id1 IN (10, 50)');
+              },
+              'property' => 'name',
+         ));
 
-     $field->bind('2');
+      $field->bind('1');
 
-     $this->assertFalse($field->isSynchronized());
-     $this->assertNull($field->getData());
-     }
+      $this->assertFalse($field->isSynchronized());
+      $this->assertNull($field->getData());
+   }
 
-     public function testSubmitSingleStringIdentifier()
-     {
-     $entity1 = new SingleStringIdentBitPowerEntity('foo', 'Foo');
+   public function testSubmitSingleStringIdentifier()
+   {
+      $entity1 = new SingleStringIdentBitPowerEntity('foo', 'Foo', 0);
 
-     $this->persist(array ($entity1));
+      $this->persist(array ($entity1));
 
-     $field = $this->factory->createNamed('entitybit', 'name', null, array (
-     'multiple' => false,
-     'expanded' => false,
-     'em' => 'default',
-     'class' => self::SINGLE_STRING_IDENT_CLASS,
-     'property' => 'name',
-     ));
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'multiple' => false,
+              'expanded' => false,
+              'em' => 'default',
+              'class' => self::SINGLE_STRING_IDENT_BIT_POWER_CLASS,
+              'property' => 'name',
+         ));
 
-     $field->bind('foo');
+      $field->bind(0);
 
-     $this->assertTrue($field->isSynchronized());
-     $this->assertEquals($entity1, $field->getData());
-     $this->assertEquals('foo', $field->getClientData());
-     }
+      $this->assertTrue($field->isSynchronized());
+      $this->assertEquals(1, $field->getData());
+      $this->assertEquals(0, $field->getClientData());
+   }
 
-     public function testSubmitCompositeStringIdentifier()
-     {
-     $entity1 = new CompositeStringIdentBitPowerEntity('foo1', 'foo2', 'Foo');
+   public function testSubmitCompositeStringIdentifier()
+   {
+      $entity1 = new CompositeStringIdentBitPowerEntity('foo1', 'foo2', 'Foo', 4);
 
-     $this->persist(array ($entity1));
+      $this->persist(array ($entity1));
 
-     $field = $this->factory->createNamed('entitybit', 'name', null, array (
-     'multiple' => false,
-     'expanded' => false,
-     'em' => 'default',
-     'class' => self::COMPOSITE_STRING_IDENT_BIT_POWER_CLASS,
-     'property' => 'name',
-     ));
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'multiple' => false,
+              'expanded' => false,
+              'em' => 'default',
+              'class' => self::COMPOSITE_STRING_IDENT_BIT_POWER_CLASS,
+              'property' => 'name',
+         ));
 
-     // the collection key is used here
-     $field->bind('0');
+      // the collection key is used here
+      $field->bind('4');
 
-     $this->assertTrue($field->isSynchronized());
-     $this->assertEquals($entity1, $field->getData());
-     $this->assertEquals(0, $field->getClientData());
-     } */
+      $this->assertTrue($field->isSynchronized());
+      $this->assertEquals(16, $field->getData());
+      $this->assertEquals(4, $field->getClientData());
+   }
 
-   protected function createRegistryMock($name, $em)
+   protected
+
+   function createRegistryMock($name, $em)
    {
       $registry = $this->getMock('Symfony\Bridge\Doctrine\RegistryInterface');
       $registry->expects($this->any())
@@ -618,3 +624,4 @@ class EntityBitTypeTest extends TypeTestCase
    }
 
 }
+
