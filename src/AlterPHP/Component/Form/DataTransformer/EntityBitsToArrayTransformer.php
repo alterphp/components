@@ -41,7 +41,8 @@ class EntityBitsToArrayTransformer implements DataTransformerInterface
 
       $bitList = BitTools::getBitArrayFromInt($data);
       $largeCollection = $this->choiceList->getEntities();
-      $callback = function ($entity) use ($bitList) { return in_array($entity->getBitPower(), $bitList, true); };
+      $cl = $this->choiceList;
+      $callback = function ($entity) use ($cl, $bitList) { return in_array($cl->getBitPowerValue($entity), $bitList, true); };
       $collection = array_filter($largeCollection, $callback);
 
       $array = array ();

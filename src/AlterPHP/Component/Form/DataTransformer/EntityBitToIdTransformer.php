@@ -40,23 +40,23 @@ class EntityBitToIdTransformer implements DataTransformerInterface
 
       $bitPowerArray = BitTools::getBitArrayFromInt($data);
 
-      if (count($bitPowerArray) != 1)
+      if (count($bitPowerArray) > 1)
       {
          throw new \InvalidArgumentException('Provided data leads to many selected choices. Did you disable "multiple" option ?');
+      }
+      elseif (count($bitPowerArray) == 0)
+      {
+         return 0;
       }
 
       if ($this->choiceList->getEntity($bitPowerArray[0]))
       {
          return $bitPowerArray[0];
       }
-      else
-      {
-         return null;
-      }
    }
 
    /**
-    * Transforms choice keys into entities.
+    * Transforms choice keys into entities bitPower sum.
     *
     * @param  mixed $key   An array of keys, a single key or NULL
     *
@@ -66,7 +66,7 @@ class EntityBitToIdTransformer implements DataTransformerInterface
    {
       if ('' === $key || null === $key)
       {
-         return null;
+         return 0;
       }
 
       if (!is_numeric($key))

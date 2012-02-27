@@ -6,16 +6,14 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 
-/**
- * @Entity
- */
-class BitPowerEntity
+/** @Entity */
+class SingleStringIdentEntity
 {
 
-   /** @Id @Column(type="integer") */
+   /** @Id @Column(type="string") */
    protected $id;
 
-   /** @Column(type="integer", nullable=true) */
+   /** @Column(type="string") */
    public $name;
 
    /** @Column(type="string", unique=true) */

@@ -2,16 +2,13 @@
 
 namespace AlterPHP\Tests\Component\Form\ChoiceList;
 
-/*require_once __DIR__.'/../../DoctrineOrmTestCase.php';
-require_once __DIR__.'/../../Fixtures/BitPowerEntity.php';*/
-
-use AlterPHP\Tests\Component\Fixtures\BitPowerEntity;
+use AlterPHP\Tests\Component\Fixtures\SingleIdentBitPowerEntity;
 use Symfony\Tests\Bridge\Doctrine\DoctrineOrmTestCase;
 use AlterPHP\Component\Form\ChoiceList\EntityBitChoiceList;
 
 class EntityBitChoiceListTest extends DoctrineOrmTestCase
 {
-    const BIT_POWER_CLASS = 'AlterPHP\Tests\Component\Fixtures\BitPowerEntity';
+    const SINGLE_IDENT_BIT_POWER_CLASS = 'AlterPHP\Tests\Component\Fixtures\SingleIdentBitPowerEntity';
 
     private $em;
 
@@ -34,14 +31,14 @@ class EntityBitChoiceListTest extends DoctrineOrmTestCase
      */
     public function testChoicesMustBeManaged()
     {
-        $entity1 = new BitPowerEntity(1, 'Foo', 0);
-        $entity2 = new BitPowerEntity(2, 'Bar', 1);
+        $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 0);
+        $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 1);
 
         // no persist here!
 
         $choiceList = new EntityBitChoiceList(
             $this->em,
-            self::BIT_POWER_CLASS,
+            self::SINGLE_IDENT_BIT_POWER_CLASS,
             'bitPower',
             'name',
             null,
@@ -57,8 +54,8 @@ class EntityBitChoiceListTest extends DoctrineOrmTestCase
 
     public function testFlattenedChoicesAreManaged()
     {
-        $entity1 = new BitPowerEntity(1, 'Foo', 2);
-        $entity2 = new BitPowerEntity(2, 'Bar', 5);
+        $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 2);
+        $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 5);
 
         // Persist for managed state
         $this->em->persist($entity1);
@@ -66,7 +63,7 @@ class EntityBitChoiceListTest extends DoctrineOrmTestCase
 
         $choiceList = new EntityBitChoiceList(
             $this->em,
-            self::BIT_POWER_CLASS,
+            self::SINGLE_IDENT_BIT_POWER_CLASS,
             'bitPower',
             'name',
             null,
@@ -81,8 +78,8 @@ class EntityBitChoiceListTest extends DoctrineOrmTestCase
 
     public function testEmptyChoicesAreManaged()
     {
-        $entity1 = new BitPowerEntity(1, 'Foo', 0);
-        $entity2 = new BitPowerEntity(2, 'Bar', 5);
+        $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 0);
+        $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 5);
 
         // Persist for managed state
         $this->em->persist($entity1);
@@ -90,7 +87,7 @@ class EntityBitChoiceListTest extends DoctrineOrmTestCase
 
         $choiceList = new EntityBitChoiceList(
             $this->em,
-            self::BIT_POWER_CLASS,
+            self::SINGLE_IDENT_BIT_POWER_CLASS,
             'bitPower',
             'name',
             null,
@@ -102,8 +99,8 @@ class EntityBitChoiceListTest extends DoctrineOrmTestCase
 
     public function testNestedChoicesAreManaged()
     {
-        $entity1 = new BitPowerEntity(1, 'Foo', 3);
-        $entity2 = new BitPowerEntity(2, 'Bar', 6);
+        $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 3);
+        $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 6);
 
         // Oh yeah, we're persisting with fire now!
         $this->em->persist($entity1);
@@ -111,7 +108,7 @@ class EntityBitChoiceListTest extends DoctrineOrmTestCase
 
         $choiceList = new EntityBitChoiceList(
             $this->em,
-            self::BIT_POWER_CLASS,
+            self::SINGLE_IDENT_BIT_POWER_CLASS,
             'bitPower',
             'name',
             null,

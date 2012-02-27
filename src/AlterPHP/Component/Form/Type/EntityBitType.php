@@ -39,6 +39,9 @@ class EntityBitType extends AbstractType
 
    public function getDefaultOptions(array $options)
    {
+      $multiple = !isset($options['multiple']) || $options['multiple'];
+      $expanded = !isset($options['expanded']) || $options['expanded'];
+
       $defaultOptions = array (
               'em' => null,
               'class' => null,
@@ -51,8 +54,8 @@ class EntityBitType extends AbstractType
               'expanded' => true,
               'error_bubbling' => false,
               'preferred_choices' => array (),
-              'empty_data' => array (),
-              'empty_value' => null,
+              'empty_data' => $multiple || $expanded ? array () : '',
+              'empty_value' => $multiple || $expanded || !isset($options['empty_value']) ? null : '',
       );
 
       $options = array_replace($defaultOptions, $options);

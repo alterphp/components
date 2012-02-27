@@ -263,14 +263,14 @@ class EntityBitChoiceList extends ArrayChoiceList
 
       try
       {
-         if (count($this->identifier) > 1)
+         /*if (count($this->identifier) > 1)
          {
             // $key is a collection index
             $entities = $this->getEntities();
 
             return isset($entities[$key]) ? $entities[$key] : null;
          }
-         elseif ($this->entities)
+         else*/if ($this->entities)
          {
             return isset($this->entities[$key]) ? $this->entities[$key] : null;
          }
