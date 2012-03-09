@@ -10,10 +10,10 @@ if (!is_dir(VENDOR_PATH)) {
 }
 
 $deps = array(
-    array('Symfony', 'http://github.com/symfony/symfony.git', '3e9d937eb8fedb8a585559e04311ee9a39db421f'),
-    array('Doctrine/ORM', 'https://github.com/doctrine/doctrine2.git', 'master'),
-    array('Doctrine/Common', 'https://github.com/doctrine/common.git', 'master'),
-    array('Doctrine/DBAL', 'https://github.com/doctrine/dbal.git', 'master'),
+    array('Symfony', 'http://github.com/symfony/symfony.git', 'v2.0.11'),
+    array('Doctrine/ORM', 'https://github.com/doctrine/doctrine2.git', '2.1.6'),
+    array('Doctrine/Common', 'https://github.com/doctrine/common.git', '2.1.4'),
+    array('Doctrine/DBAL', 'https://github.com/doctrine/dbal.git', '2.1.6'),
 );
 
 foreach ($deps as $dep) {
