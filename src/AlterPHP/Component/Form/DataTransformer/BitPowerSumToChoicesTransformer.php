@@ -2,20 +2,18 @@
 
 namespace AlterPHP\Component\Form\DataTransformer;
 
-use AlterPHP\Component\Form\ChoiceList\EntityBitChoiceList;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ArrayChoiceList;
 use AlterPHP\Component\ToolBox\BitTools;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\DataTransformerInterface;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 
-class EntityBitsToArrayTransformer implements DataTransformerInterface
+class BitPowerSumToChoicesTransformer implements DataTransformerInterface
 {
 
    private $choiceList;
 
-   public function __construct(EntityBitChoiceList $choiceList)
+   public function __construct(ArrayChoiceList $choiceList)
    {
       $this->choiceList = $choiceList;
    }
@@ -38,24 +36,23 @@ class EntityBitsToArrayTransformer implements DataTransformerInterface
       }
 
       $bitList = BitTools::getBitArrayFromInt($data);
-      $largeCollection = $this->choiceList->getEntities();
+      $largeChoices = $this->choiceList->getChoices();
       $cl = $this->choiceList;
-      $callback = function ($entity) use ($cl, $bitList) { return in_array($cl->getBitPowerValue($entity), $bitList, true); };
-      $collection = array_filter($largeCollection, $callback);
+      $callback = function ($bitPower) use ($cl, $bitList) { return in_array($bitPower, $bitList, true); };
+      $choices = array_filter($largeChoices, $callback);
 
       $array = array ();
 
-      foreach ($collection as $entity)
+      foreach ($choices as $bitPower)
       {
-         $value = $this->choiceList->getBitPowerValue($entity);
-         $array[] = is_numeric($value) ? (int) $value : $value;
+         $array[] = is_numeric($bitPower) ? (int) $bitPower : $bitPower;
       }
 
       return $array;
    }
 
    /**
-    * Transforms choice keys into
+    * Transforms choice keys into bitPower sum...
     * @param  mixed $keys An array of keys, a single key or NULL
     * @return integer An integer reprensenting bitPowers sum
     */
@@ -74,10 +71,9 @@ class EntityBitsToArrayTransformer implements DataTransformerInterface
       $bitSum = 0;
       $notFound = array ();
 
-      // optimize this into a SELECT WHERE IN query
       foreach ($keys as $key)
       {
-         if (is_object($this->choiceList->getEntity($key)))
+         if (in_array($key, $this->choiceList))
          {
             $bitSum += pow(2, (int)$key);
          }
@@ -89,7 +85,7 @@ class EntityBitsToArrayTransformer implements DataTransformerInterface
 
       if (count($notFound) > 0)
       {
-         throw new TransformationFailedException(sprintf('The entities with bitPowers "%s" could not be found', implode('", "', $notFound)));
+         throw new TransformationFailedException(sprintf('The itPowers "%s" could not be found', implode('", "', $notFound)));
       }
 
       return $bitSum;

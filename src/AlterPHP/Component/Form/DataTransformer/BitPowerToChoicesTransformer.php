@@ -60,7 +60,7 @@ class EntityBitToIdTransformer implements DataTransformerInterface
     *
     * @param  mixed $key   An array of keys, a single key or NULL
     *
-    * @return integer An integer reprensenting bitPowers sum
+    * @return Collection|object  A collection of entities, a single entity or NULL
     */
    public function reverseTransform($key)
    {
