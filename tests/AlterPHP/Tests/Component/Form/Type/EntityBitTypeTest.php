@@ -145,7 +145,7 @@ class EntityBitTypeTest extends TypeTestCase
       $field->setData(null);
 
       $this->assertEquals(null, $field->getData());
-      $this->assertEquals(0, $field->getClientData());
+      $this->assertEquals('', $field->getClientData());
    }
 
    public function testSetDataMultipleExpandedNull()
@@ -197,7 +197,7 @@ class EntityBitTypeTest extends TypeTestCase
       $field->bind(null);
 
       $this->assertEquals(null, $field->getData());
-      $this->assertEquals(0, $field->getClientData());
+      $this->assertEquals('', $field->getClientData());
    }
 
    public function testSubmitMultipleNull()

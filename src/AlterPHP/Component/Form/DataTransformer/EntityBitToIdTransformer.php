@@ -30,12 +30,12 @@ class EntityBitToIdTransformer implements DataTransformerInterface
    {
       if (null === $data)
       {
-         return 0;
+         return null;
       }
 
-      if (!is_int($data))
+      if (!is_numeric($data))
       {
-         throw new UnexpectedTypeException($data, 'integer');
+         throw new UnexpectedTypeException($data, 'numeric');
       }
 
       $bitPowerArray = BitTools::getBitArrayFromInt($data);
@@ -46,7 +46,7 @@ class EntityBitToIdTransformer implements DataTransformerInterface
       }
       elseif (count($bitPowerArray) == 0)
       {
-         return 0;
+         return null;
       }
 
       if ($this->choiceList->getEntity($bitPowerArray[0]))

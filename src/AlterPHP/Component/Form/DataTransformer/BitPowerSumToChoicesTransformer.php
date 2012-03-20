@@ -2,8 +2,8 @@
 
 namespace AlterPHP\Component\Form\DataTransformer;
 
-use Symfony\Component\Form\Extension\Core\ChoiceList\ArrayChoiceList;
 use AlterPHP\Component\ToolBox\BitTools;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -13,7 +13,7 @@ class BitPowerSumToChoicesTransformer implements DataTransformerInterface
 
    private $choiceList;
 
-   public function __construct(ArrayChoiceList $choiceList)
+   public function __construct(ChoiceListInterface $choiceList)
    {
       $this->choiceList = $choiceList;
    }
@@ -36,16 +36,23 @@ class BitPowerSumToChoicesTransformer implements DataTransformerInterface
       }
 
       $bitList = BitTools::getBitArrayFromInt($data);
-      $largeChoices = $this->choiceList->getChoices();
-      $cl = $this->choiceList;
-      $callback = function ($bitPower) use ($cl, $bitList) { return in_array($bitPower, $bitList, true); };
-      $choices = array_filter($largeChoices, $callback);
+      try
+      {
+         $largeChoices = $this->choiceList->getChoices();
+      }
+      catch (\Exception $e)
+      {
+         throw new TransformationFailedException('Can not get the choice list', $e->getCode(), $e);
+      }
 
       $array = array ();
 
-      foreach ($choices as $bitPower)
+      foreach ($largeChoices as $bitPower => $value)
       {
-         $array[] = is_numeric($bitPower) ? (int) $bitPower : $bitPower;
+         if (in_array($bitPower, $bitList))
+         {
+            $array[] = is_numeric($bitPower) ? (int) $bitPower : $bitPower;
+         }
       }
 
       return $array;
@@ -73,19 +80,19 @@ class BitPowerSumToChoicesTransformer implements DataTransformerInterface
 
       foreach ($keys as $key)
       {
-         if (in_array($key, $this->choiceList))
+         if (in_array($key[0], $this->choiceList->getChoices()))
          {
-            $bitSum += pow(2, (int)$key);
+            $bitSum += pow(2, (int) $key[0]);
          }
          else
          {
-            $notFound[] = $key;
+            $notFound[] = $key[0];
          }
       }
 
       if (count($notFound) > 0)
       {
-         throw new TransformationFailedException(sprintf('The itPowers "%s" could not be found', implode('", "', $notFound)));
+         throw new TransformationFailedException(sprintf('The choice with bitPower "%s" could not be found', implode(',', $notFound)));
       }
 
       return $bitSum;

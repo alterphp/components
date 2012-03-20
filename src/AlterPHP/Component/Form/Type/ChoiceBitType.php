@@ -6,6 +6,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Exception\FormException;
+use AlterPHP\Component\Form\DataTransformer\BitPowerSumToChoicesTransformer;
+use AlterPHP\Component\Form\DataTransformer\BitPowerToChoicesTransformer;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ArrayChoiceList;
 
 class ChoiceBitType extends ChoiceType
 {
@@ -32,9 +35,24 @@ class ChoiceBitType extends ChoiceType
    {
       $parentOptions = parent::getDefaultOptions($options);
 
-      $specificDefaultOptions = array ('multiple' => true, 'expanded' => true);
+      $multiple = !isset($options['multiple']) || $options['multiple'];
+      $expanded = !isset($options['expanded']) || $options['expanded'];
 
-      return array_merge($parentOptions, $specificDefaultOptions);
+      $specificDefaultOptions = array (
+              'multiple' => true,
+              'expanded' => true,
+              'empty_data' => $multiple || $expanded ? array () : '',
+              'empty_value' => $multiple || $expanded || !isset($options['empty_value']) ? null : '',
+      );
+
+      $options = array_merge($parentOptions, $specificDefaultOptions, $options);
+
+      if (!isset($options['choice_list']))
+      {
+         $options['choice_list'] = new ArrayChoiceList($options['choices']);
+      }
+
+      return $options;
    }
 
    public function getParent(array $options)

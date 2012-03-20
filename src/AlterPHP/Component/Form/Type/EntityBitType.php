@@ -39,10 +39,13 @@ class EntityBitType extends AbstractType
 
    public function getDefaultOptions(array $options)
    {
+      $parentOptions = parent::getDefaultOptions($options);
+
+      //Following 2 lines depends on default
       $multiple = !isset($options['multiple']) || $options['multiple'];
       $expanded = !isset($options['expanded']) || $options['expanded'];
 
-      $defaultOptions = array (
+      $specificDefaultOptions = array (
               'em' => null,
               'class' => null,
               'property' => null,
@@ -58,11 +61,11 @@ class EntityBitType extends AbstractType
               'empty_value' => $multiple || $expanded || !isset($options['empty_value']) ? null : '',
       );
 
-      $options = array_replace($defaultOptions, $options);
+      $options = array_merge($parentOptions, $specificDefaultOptions, $options);
 
       if (!isset($options['choice_list']))
       {
-         $defaultOptions['choice_list'] = new EntityBitChoiceList(
+         $options['choice_list'] = new EntityBitChoiceList(
                $this->registry->getEntityManager($options['em']),
                $options['class'],
                $options['bitpower_property'],
@@ -72,7 +75,7 @@ class EntityBitType extends AbstractType
          );
       }
 
-      return $defaultOptions;
+      return $options;
    }
 
    public function getParent(array $options)
