@@ -148,6 +148,20 @@ class EntityBitTypeTest extends TypeTestCase
       $this->assertEquals('', $field->getClientData());
    }
 
+   public function testSetDataSingleZero()
+   {
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'multiple' => false,
+              'expanded' => false,
+              'em' => 'default',
+              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+         ));
+      $field->setData(0);
+
+      $this->assertEquals(0, $field->getData());
+      $this->assertEquals('', $field->getClientData());
+   }
+
    public function testSetDataMultipleExpandedNull()
    {
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
@@ -157,6 +171,18 @@ class EntityBitTypeTest extends TypeTestCase
       $field->setData(null);
 
       $this->assertEquals(null, $field->getData());
+      $this->assertEquals(array (), $field->getClientData());
+   }
+
+   public function testSetDataMultipleExpandedZero()
+   {
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'em' => 'default',
+              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+         ));
+      $field->setData(0);
+
+      $this->assertEquals(0, $field->getData());
       $this->assertEquals(array (), $field->getClientData());
    }
 
@@ -170,6 +196,19 @@ class EntityBitTypeTest extends TypeTestCase
       $field->setData(null);
 
       $this->assertEquals(null, $field->getData());
+      $this->assertEquals(array (), $field->getClientData());
+   }
+
+   public function testSetDataMultipleNonExpandedZero()
+   {
+      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+              'expanded' => false,
+              'em' => 'default',
+              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+         ));
+      $field->setData(0);
+
+      $this->assertEquals(0, $field->getData());
       $this->assertEquals(array (), $field->getClientData());
    }
 
