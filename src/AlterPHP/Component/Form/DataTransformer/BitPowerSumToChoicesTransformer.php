@@ -12,10 +12,12 @@ class BitPowerSumToChoicesTransformer implements DataTransformerInterface
 {
 
    private $choiceList;
+   private $expanded;
 
-   public function __construct(ChoiceListInterface $choiceList)
+   public function __construct(ChoiceListInterface $choiceList, $expanded = true)
    {
       $this->choiceList = $choiceList;
+      $this->expanded = $expanded;
    }
 
    /**
@@ -80,19 +82,33 @@ class BitPowerSumToChoicesTransformer implements DataTransformerInterface
 
       foreach ($keys as $key)
       {
-         if (in_array($key[0], $this->choiceList->getChoices()))
+         if (!$this->expanded)
          {
-            $bitSum += pow(2, (int) $key[0]);
+            if (array_key_exists((int) $key[0], $this->choiceList->getChoices()))
+            {
+               $bitSum += pow(2, (int) $key[0]);
+            }
+            else
+            {
+               $notFound[] = $key[0];
+            }
          }
          else
          {
-            $notFound[] = $key[0];
+            if (array_key_exists((int) $key, $this->choiceList->getChoices()))
+            {
+               $bitSum += pow(2, (int) $key);
+            }
+            else
+            {
+               $notFound[] = $key;
+            }
          }
       }
 
       if (count($notFound) > 0)
       {
-         throw new TransformationFailedException(sprintf('The choice with bitPower "%s" could not be found', implode(',', $notFound)));
+         throw new TransformationFailedException(sprintf('The choices with bitPower "%s" could not be found', implode(',', $notFound)));
       }
 
       return $bitSum;

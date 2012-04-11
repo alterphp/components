@@ -39,6 +39,7 @@ class BitPowerToChoicesTransformer implements DataTransformerInterface
       }
 
       $bitList = BitTools::getBitArrayFromInt($data);
+
       try
       {
          $largeChoices = $this->choiceList->getChoices();
@@ -51,7 +52,7 @@ class BitPowerToChoicesTransformer implements DataTransformerInterface
          {
             return in_array($bitPower, $bitList, true);
          };
-      $choices = array_filter($largeChoices, $callback);
+      $choices = array_filter(array_keys($largeChoices), $callback);
 
       if (count($choices) > 1)
       {
@@ -59,11 +60,12 @@ class BitPowerToChoicesTransformer implements DataTransformerInterface
       }
       elseif (count($choices) == 0)
       {
-         //XXX
          return null;
       }
 
-      return is_numeric($choices[0]) ? (int) $choices[0] : $choices[0];
+      $choice = array_shift($choices);
+
+      return is_int($choice) ? (int) $choice : $choice;
    }
 
    /**
@@ -85,7 +87,7 @@ class BitPowerToChoicesTransformer implements DataTransformerInterface
          throw new UnexpectedTypeException($key, 'numeric');
       }
 
-      if (!in_array($key, $this->choiceList->getChoices()))
+      if (!array_key_exists((int) $key, $this->choiceList->getChoices()))
       {
          throw new TransformationFailedException(sprintf('The choice with bitPower "%s" could not be found', $key));
       }

@@ -8,22 +8,32 @@ use Symfony\Bridge\Doctrine\Form\DoctrineOrmTypeGuesser;
 
 class AlterPHPExtension extends AbstractExtension
 {
-    protected $registry;
 
-    public function __construct(RegistryInterface $registry)
-    {
-        $this->registry = $registry;
-    }
+   protected $registry;
 
-    protected function loadTypes()
-    {
-        return array(
-            new Type\EntityBitType($this->registry),
-        );
-    }
+   public function __construct(RegistryInterface $registry = null)
+   {
+      if (isset($registry))
+      {
+         $this->registry = $registry;
+      }
+   }
 
-    protected function loadTypeGuesser()
-    {
-        return new DoctrineOrmTypeGuesser($this->registry);
-    }
+   protected function loadTypes()
+   {
+      $types = array(new Type\ChoiceBitType());
+
+      if (isset($this->registry))
+      {
+         $types[] = new Type\EntityBitType($this->registry);
+      }
+
+      return $types;
+   }
+
+   protected function loadTypeGuesser()
+   {
+      return new DoctrineOrmTypeGuesser($this->registry);
+   }
+
 }

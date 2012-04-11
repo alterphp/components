@@ -20,7 +20,7 @@ class ChoiceBitType extends ChoiceType
    {
       if ($options['multiple'])
       {
-         $builder->prependClientTransformer(new BitPowerSumToChoicesTransformer($options['choice_list']));
+         $builder->prependClientTransformer(new BitPowerSumToChoicesTransformer($options['choice_list'], $options['expanded']));
       }
       else
       {
