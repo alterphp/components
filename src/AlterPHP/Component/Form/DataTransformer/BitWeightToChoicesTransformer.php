@@ -9,7 +9,7 @@ use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\Common\Collections\Collection;
 
-class BitPowerToChoicesTransformer implements DataTransformerInterface
+class BitWeightToChoicesTransformer implements DataTransformerInterface
 {
 
    private $choiceList;
@@ -20,9 +20,9 @@ class BitPowerToChoicesTransformer implements DataTransformerInterface
    }
 
    /**
-    * Transforms bitPowers into choice keys.
+    * Transforms bitWeights into choice keys.
     *
-    * @param  integer $data An integer reprensenting a bitPower
+    * @param  integer $data An integer reprensenting a bitWeight
     *
     * @return mixed An array of choice keys, a single key or NULL
     */
@@ -48,9 +48,9 @@ class BitPowerToChoicesTransformer implements DataTransformerInterface
       {
          throw new TransformationFailedException('Can not get the choice list', $e->getCode(), $e);
       }
-      $callback = function ($bitPower) use ($bitList)
+      $callback = function ($bitWeight) use ($bitList)
          {
-            return in_array($bitPower, $bitList, true);
+            return in_array($bitWeight, $bitList, true);
          };
       $choices = array_filter(array_keys($largeChoices), $callback);
 
@@ -69,7 +69,7 @@ class BitPowerToChoicesTransformer implements DataTransformerInterface
    }
 
    /**
-    * Transforms choice keys into bitPower sum.
+    * Transforms choice keys into bitWeight sum.
     *
     * @param  mixed $key   An array of keys, a single key or NULL
     *
@@ -89,7 +89,7 @@ class BitPowerToChoicesTransformer implements DataTransformerInterface
 
       if (!array_key_exists((int) $key, $this->choiceList->getChoices()))
       {
-         throw new TransformationFailedException(sprintf('The choice with bitPower "%s" could not be found', $key));
+         throw new TransformationFailedException(sprintf('The choice with bitWeight "%s" could not be found', $key));
       }
 
       return pow(2, $key);

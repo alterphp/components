@@ -22,7 +22,7 @@ class EntityBitsToArrayTransformer implements DataTransformerInterface
 
    /**
     * Transforms bitSum integer into choice keys.
-    * @param  integer $data An integer reprensenting bitPowers sum
+    * @param  integer $data An integer reprensenting bitWeights sum
     * @return mixed An array of choice keys, a single key or NULL
     */
    public function transform($data)
@@ -40,14 +40,14 @@ class EntityBitsToArrayTransformer implements DataTransformerInterface
       $bitList = BitTools::getBitArrayFromInt($data);
       $largeCollection = $this->choiceList->getEntities();
       $cl = $this->choiceList;
-      $callback = function ($entity) use ($cl, $bitList) { return in_array($cl->getBitPowerValue($entity), $bitList, true); };
+      $callback = function ($entity) use ($cl, $bitList) { return in_array($cl->getBitWeightValue($entity), $bitList, true); };
       $collection = array_filter($largeCollection, $callback);
 
       $array = array ();
 
       foreach ($collection as $entity)
       {
-         $value = $this->choiceList->getBitPowerValue($entity);
+         $value = $this->choiceList->getBitWeightValue($entity);
          $array[] = is_numeric($value) ? (int) $value : $value;
       }
 
@@ -57,7 +57,7 @@ class EntityBitsToArrayTransformer implements DataTransformerInterface
    /**
     * Transforms choice keys into
     * @param  mixed $keys An array of keys, a single key or NULL
-    * @return integer An integer reprensenting bitPowers sum
+    * @return integer An integer reprensenting bitWeights sum
     */
    public function reverseTransform($keys)
    {
@@ -89,7 +89,7 @@ class EntityBitsToArrayTransformer implements DataTransformerInterface
 
       if (count($notFound) > 0)
       {
-         throw new TransformationFailedException(sprintf('The entities with bitPowers "%s" could not be found', implode(',', $notFound)));
+         throw new TransformationFailedException(sprintf('The entities with bitWeights "%s" could not be found', implode(',', $notFound)));
       }
 
       return $bitSum;

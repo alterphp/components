@@ -17,18 +17,18 @@ class BitToolsTest extends \PHPUnit_Framework_TestCase
       $testValue1 = 123456;
       $returnedArray1 = BitTools::getBitArrayFromInt($testValue1);
       $expectValue1 = 0;
-      foreach($returnedArray1 as $bitPower)
+      foreach($returnedArray1 as $bitWeight)
       {
-         $expectValue1 += pow(2, $bitPower);
+         $expectValue1 += pow(2, $bitWeight);
       }
       $this->assertEquals($expectValue1, $testValue1);
 
       $testValue2 = 444555666;
       $returnedArray2 = BitTools::getBitArrayFromInt($testValue2);
       $expectValue2 = 0;
-      foreach($returnedArray2 as $bitPower)
+      foreach($returnedArray2 as $bitWeight)
       {
-         $expectValue2 += pow(2, $bitPower);
+         $expectValue2 += pow(2, $bitWeight);
       }
       $this->assertEquals($expectValue2, $testValue2);
 

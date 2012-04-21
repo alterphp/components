@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /** @Entity */
-class CompositeIdentBitPowerEntity implements UserInterface
+class CompositeIdentBitWeightEntity implements UserInterface
 {
 
    /** @Id @Column(type="integer") */
@@ -21,14 +21,14 @@ class CompositeIdentBitPowerEntity implements UserInterface
    public $name;
 
    /** @Column(type="string", unique=true) */
-   public $bitPower;
+   public $bitWeight;
 
-   public function __construct($id1, $id2, $name, $bitPower)
+   public function __construct($id1, $id2, $name, $bitWeight)
    {
       $this->id1 = $id1;
       $this->id2 = $id2;
       $this->name = $name;
-      $this->bitPower = $bitPower;
+      $this->bitWeight = $bitWeight;
    }
 
    public function getRoles()

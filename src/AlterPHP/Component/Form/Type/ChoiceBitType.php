@@ -6,8 +6,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Exception\FormException;
-use AlterPHP\Component\Form\DataTransformer\BitPowerSumToChoicesTransformer;
-use AlterPHP\Component\Form\DataTransformer\BitPowerToChoicesTransformer;
+use AlterPHP\Component\Form\DataTransformer\BitWeightSumToChoicesTransformer;
+use AlterPHP\Component\Form\DataTransformer\BitWeightToChoicesTransformer;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ArrayChoiceList;
 
 class ChoiceBitType extends ChoiceType
@@ -20,11 +20,11 @@ class ChoiceBitType extends ChoiceType
    {
       if ($options['multiple'])
       {
-         $builder->prependClientTransformer(new BitPowerSumToChoicesTransformer($options['choice_list'], $options['expanded']));
+         $builder->prependClientTransformer(new BitWeightSumToChoicesTransformer($options['choice_list'], $options['expanded']));
       }
       else
       {
-         $builder->prependClientTransformer(new BitPowerToChoicesTransformer($options['choice_list']));
+         $builder->prependClientTransformer(new BitWeightToChoicesTransformer($options['choice_list']));
       }
    }
 

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 
 /** @Entity */
-class CompositeStringIdentBitPowerEntity
+class CompositeStringIdentBitWeightEntity
 {
 
    /** @Id @Column(type="string") */
@@ -20,14 +20,14 @@ class CompositeStringIdentBitPowerEntity
    public $name;
 
    /** @Column(type="string", unique=true) */
-   public $bitPower;
+   public $bitWeight;
 
-   public function __construct($id1, $id2, $name, $bitPower)
+   public function __construct($id1, $id2, $name, $bitWeight)
    {
       $this->id1 = $id1;
       $this->id2 = $id2;
       $this->name = $name;
-      $this->bitPower = $bitPower;
+      $this->bitWeight = $bitWeight;
    }
 
 }

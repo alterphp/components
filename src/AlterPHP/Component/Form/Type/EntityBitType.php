@@ -49,7 +49,7 @@ class EntityBitType extends AbstractType
               'em' => null,
               'class' => null,
               'property' => null,
-              'bitpower_property' => 'bitPower',
+              'bitweight_property' => 'bitWeight',
               'query_builder' => null,
               'choices' => null,
               'choice_list' => null,
@@ -68,7 +68,7 @@ class EntityBitType extends AbstractType
          $options['choice_list'] = new EntityBitChoiceList(
                $this->registry->getEntityManager($options['em']),
                $options['class'],
-               $options['bitpower_property'],
+               $options['bitweight_property'],
                $options['property'],
                $options['query_builder'],
                $options['choices']

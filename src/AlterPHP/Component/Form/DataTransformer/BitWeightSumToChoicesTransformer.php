@@ -8,7 +8,7 @@ use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\DataTransformerInterface;
 
-class BitPowerSumToChoicesTransformer implements DataTransformerInterface
+class BitWeightSumToChoicesTransformer implements DataTransformerInterface
 {
 
    private $choiceList;
@@ -22,7 +22,7 @@ class BitPowerSumToChoicesTransformer implements DataTransformerInterface
 
    /**
     * Transforms bitSum integer into choice keys.
-    * @param  integer $data An integer reprensenting bitPowers sum
+    * @param  integer $data An integer reprensenting bitWeights sum
     * @return mixed An array of choice keys, a single key or NULL
     */
    public function transform($data)
@@ -49,11 +49,11 @@ class BitPowerSumToChoicesTransformer implements DataTransformerInterface
 
       $array = array ();
 
-      foreach ($largeChoices as $bitPower => $value)
+      foreach ($largeChoices as $bitWeight => $value)
       {
-         if (in_array($bitPower, $bitList))
+         if (in_array($bitWeight, $bitList))
          {
-            $array[] = is_numeric($bitPower) ? (int) $bitPower : $bitPower;
+            $array[] = is_numeric($bitWeight) ? (int) $bitWeight : $bitWeight;
          }
       }
 
@@ -61,9 +61,9 @@ class BitPowerSumToChoicesTransformer implements DataTransformerInterface
    }
 
    /**
-    * Transforms choice keys into bitPower sum...
+    * Transforms choice keys into bitWeight sum...
     * @param  mixed $keys An array of keys, a single key or NULL
-    * @return integer An integer reprensenting bitPowers sum
+    * @return integer An integer reprensenting bitWeights sum
     */
    public function reverseTransform($keys)
    {
@@ -108,7 +108,7 @@ class BitPowerSumToChoicesTransformer implements DataTransformerInterface
 
       if (count($notFound) > 0)
       {
-         throw new TransformationFailedException(sprintf('The choices with bitPower "%s" could not be found', implode(',', $notFound)));
+         throw new TransformationFailedException(sprintf('The choices with bitWeight "%s" could not be found', implode(',', $notFound)));
       }
 
       return $bitSum;

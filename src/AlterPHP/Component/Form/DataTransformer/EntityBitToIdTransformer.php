@@ -22,7 +22,7 @@ class EntityBitToIdTransformer implements DataTransformerInterface
    /**
     * Transforms entities into choice keys.
     *
-    * @param  integer $data An integer reprensenting a bitPower entity
+    * @param  integer $data An integer reprensenting a bitWeight entity
     *
     * @return mixed An array of choice keys, a single key or NULL
     */
@@ -38,29 +38,29 @@ class EntityBitToIdTransformer implements DataTransformerInterface
          throw new UnexpectedTypeException($data, 'numeric');
       }
 
-      $bitPowerArray = BitTools::getBitArrayFromInt($data);
+      $bitWeightArray = BitTools::getBitArrayFromInt($data);
 
-      if (count($bitPowerArray) > 1)
+      if (count($bitWeightArray) > 1)
       {
          throw new \InvalidArgumentException('Provided data leads to many selected choices. Did you disable "multiple" option ?');
       }
-      elseif (count($bitPowerArray) == 0)
+      elseif (count($bitWeightArray) == 0)
       {
          return null;
       }
 
-      if ($this->choiceList->getEntity($bitPowerArray[0]))
+      if ($this->choiceList->getEntity($bitWeightArray[0]))
       {
-         return $bitPowerArray[0];
+         return $bitWeightArray[0];
       }
    }
 
    /**
-    * Transforms choice keys into entities bitPower sum.
+    * Transforms choice keys into entities bitWeight sum.
     *
     * @param  mixed $key   An array of keys, a single key or NULL
     *
-    * @return integer An integer reprensenting bitPowers sum
+    * @return integer An integer reprensenting bitWeights sum
     */
    public function reverseTransform($key)
    {

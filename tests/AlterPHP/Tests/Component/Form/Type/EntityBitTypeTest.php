@@ -6,20 +6,20 @@ use AlterPHP\Component\Form\AlterPHPExtension;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Tests\Component\Form\Extension\Core\Type\TypeTestCase;
 use Symfony\Tests\Bridge\Doctrine\DoctrineOrmTestCase;
-use AlterPHP\Tests\Component\Fixtures\SingleIdentBitPowerEntity;
-use AlterPHP\Tests\Component\Fixtures\SingleStringIdentBitPowerEntity;
-use AlterPHP\Tests\Component\Fixtures\CompositeIdentBitPowerEntity;
-use AlterPHP\Tests\Component\Fixtures\CompositeStringIdentBitPowerEntity;
+use AlterPHP\Tests\Component\Fixtures\SingleIdentBitWeightEntity;
+use AlterPHP\Tests\Component\Fixtures\SingleStringIdentBitWeightEntity;
+use AlterPHP\Tests\Component\Fixtures\CompositeIdentBitWeightEntity;
+use AlterPHP\Tests\Component\Fixtures\CompositeStringIdentBitWeightEntity;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class EntityBitTypeTest extends TypeTestCase
 {
 
-   const SINGLE_STRING_IDENT_BIT_POWER_CLASS = 'AlterPHP\Tests\Component\Fixtures\SingleStringIdentBitPowerEntity';
-   const SINGLE_IDENT_BIT_POWER_CLASS = 'AlterPHP\Tests\Component\Fixtures\SingleIdentBitPowerEntity';
-   const COMPOSITE_STRING_IDENT_BIT_POWER_CLASS = 'AlterPHP\Tests\Component\Fixtures\CompositeStringIdentBitPowerEntity';
-   const COMPOSITE_IDENT_BIT_POWER_CLASS = 'AlterPHP\Tests\Component\Fixtures\CompositeIdentBitPowerEntity';
+   const SINGLE_STRING_IDENT_BIT_WEIGHT_CLASS = 'AlterPHP\Tests\Component\Fixtures\SingleStringIdentBitWeightEntity';
+   const SINGLE_IDENT_BIT_WEIGHT_CLASS = 'AlterPHP\Tests\Component\Fixtures\SingleIdentBitWeightEntity';
+   const COMPOSITE_STRING_IDENT_BIT_WEIGHT_CLASS = 'AlterPHP\Tests\Component\Fixtures\CompositeStringIdentBitWeightEntity';
+   const COMPOSITE_IDENT_BIT_WEIGHT_CLASS = 'AlterPHP\Tests\Component\Fixtures\CompositeIdentBitWeightEntity';
 
    private $em;
 
@@ -36,10 +36,10 @@ class EntityBitTypeTest extends TypeTestCase
 
       $schemaTool = new SchemaTool($this->em);
       $classes = array (
-              $this->em->getClassMetadata(self::SINGLE_IDENT_BIT_POWER_CLASS),
-              $this->em->getClassMetadata(self::SINGLE_STRING_IDENT_BIT_POWER_CLASS),
-              $this->em->getClassMetadata(self::COMPOSITE_IDENT_BIT_POWER_CLASS),
-              $this->em->getClassMetadata(self::COMPOSITE_STRING_IDENT_BIT_POWER_CLASS),
+              $this->em->getClassMetadata(self::SINGLE_IDENT_BIT_WEIGHT_CLASS),
+              $this->em->getClassMetadata(self::SINGLE_STRING_IDENT_BIT_WEIGHT_CLASS),
+              $this->em->getClassMetadata(self::COMPOSITE_IDENT_BIT_WEIGHT_CLASS),
+              $this->em->getClassMetadata(self::COMPOSITE_STRING_IDENT_BIT_WEIGHT_CLASS),
       );
 
       try
@@ -89,16 +89,16 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSetDataToUninitializedEntityWithNonRequired()
    {
-      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 2);
-      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 4);
+      $entity1 = new SingleIdentBitWeightEntity(1, 'Foo', 2);
+      $entity2 = new SingleIdentBitWeightEntity(2, 'Bar', 4);
 
       $this->persist(array ($entity1, $entity2));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'required' => false,
-              'bitpower_property' => 'bitPower',
+              'bitweight_property' => 'bitWeight',
               'property' => 'name'
          ));
 
@@ -112,7 +112,7 @@ class EntityBitTypeTest extends TypeTestCase
    {
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'query_builder' => new \stdClass(),
          ));
    }
@@ -124,7 +124,7 @@ class EntityBitTypeTest extends TypeTestCase
    {
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'query_builder' => function ()
               {
                  return new \stdClass();
@@ -140,7 +140,7 @@ class EntityBitTypeTest extends TypeTestCase
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
          ));
       $field->setData(null);
 
@@ -154,7 +154,7 @@ class EntityBitTypeTest extends TypeTestCase
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
          ));
       $field->setData(0);
 
@@ -166,7 +166,7 @@ class EntityBitTypeTest extends TypeTestCase
    {
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
          ));
       $field->setData(null);
 
@@ -178,7 +178,7 @@ class EntityBitTypeTest extends TypeTestCase
    {
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
          ));
       $field->setData(0);
 
@@ -191,7 +191,7 @@ class EntityBitTypeTest extends TypeTestCase
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'expanded' => false,
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
          ));
       $field->setData(null);
 
@@ -204,7 +204,7 @@ class EntityBitTypeTest extends TypeTestCase
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'expanded' => false,
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
          ));
       $field->setData(0);
 
@@ -217,7 +217,7 @@ class EntityBitTypeTest extends TypeTestCase
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'multiple' => false,
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
          ));
       $field->bind(null);
 
@@ -231,7 +231,7 @@ class EntityBitTypeTest extends TypeTestCase
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
          ));
       $field->bind(null);
 
@@ -244,7 +244,7 @@ class EntityBitTypeTest extends TypeTestCase
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'expanded' => false,
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
          ));
       $field->bind(null);
 
@@ -254,8 +254,8 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitSingleNonExpandedSingleIdentifier()
    {
-      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 5);
-      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 2);
+      $entity1 = new SingleIdentBitWeightEntity(1, 'Foo', 5);
+      $entity2 = new SingleIdentBitWeightEntity(2, 'Bar', 2);
 
       $this->persist(array ($entity1, $entity2));
 
@@ -263,7 +263,7 @@ class EntityBitTypeTest extends TypeTestCase
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'property' => 'name',
          ));
 
@@ -276,8 +276,8 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitSingleNonExpandedCompositeIdentifier()
    {
-      $entity1 = new CompositeIdentBitPowerEntity(10, 20, 'Foo', 3);
-      $entity2 = new CompositeIdentBitPowerEntity(30, 40, 'Bar', 4);
+      $entity1 = new CompositeIdentBitWeightEntity(10, 20, 'Foo', 3);
+      $entity2 = new CompositeIdentBitWeightEntity(30, 40, 'Bar', 4);
 
       $this->persist(array ($entity1, $entity2));
 
@@ -285,7 +285,7 @@ class EntityBitTypeTest extends TypeTestCase
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
-              'class' => self::COMPOSITE_IDENT_BIT_POWER_CLASS,
+              'class' => self::COMPOSITE_IDENT_BIT_WEIGHT_CLASS,
               'property' => 'name',
          ));
 
@@ -299,16 +299,16 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitMultipleNonExpandedSingleIdentifier()
    {
-      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 3);
-      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 2);
-      $entity3 = new SingleIdentBitPowerEntity(3, 'Baz', 0);
+      $entity1 = new SingleIdentBitWeightEntity(1, 'Foo', 3);
+      $entity2 = new SingleIdentBitWeightEntity(2, 'Bar', 2);
+      $entity3 = new SingleIdentBitWeightEntity(3, 'Baz', 0);
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'expanded' => false,
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'property' => 'name',
          ));
 
@@ -323,16 +323,16 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitMultipleNonExpandedSingleIdentifier_existingData()
    {
-      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 0);
-      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 1);
-      $entity3 = new SingleIdentBitPowerEntity(3, 'Baz', 2);
+      $entity1 = new SingleIdentBitWeightEntity(1, 'Foo', 0);
+      $entity2 = new SingleIdentBitWeightEntity(2, 'Bar', 1);
+      $entity3 = new SingleIdentBitWeightEntity(3, 'Baz', 2);
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'expanded' => false,
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'property' => 'name',
          ));
 
@@ -351,16 +351,16 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitMultipleNonExpandedCompositeIdentifier()
    {
-      $entity1 = new CompositeIdentBitPowerEntity(10, 20, 'Foo', 0);
-      $entity2 = new CompositeIdentBitPowerEntity(30, 40, 'Bar', 1);
-      $entity3 = new CompositeIdentBitPowerEntity(50, 60, 'Baz', 3);
+      $entity1 = new CompositeIdentBitWeightEntity(10, 20, 'Foo', 0);
+      $entity2 = new CompositeIdentBitWeightEntity(30, 40, 'Bar', 1);
+      $entity3 = new CompositeIdentBitWeightEntity(50, 60, 'Baz', 3);
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'expanded' => false,
               'em' => 'default',
-              'class' => self::COMPOSITE_IDENT_BIT_POWER_CLASS,
+              'class' => self::COMPOSITE_IDENT_BIT_WEIGHT_CLASS,
               'property' => 'name',
          ));
 
@@ -376,16 +376,16 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitMultipleNonExpandedCompositeIdentifier_existingData()
    {
-      $entity1 = new CompositeIdentBitPowerEntity(10, 20, 'Foo', 0);
-      $entity2 = new CompositeIdentBitPowerEntity(30, 40, 'Bar', 1);
-      $entity3 = new CompositeIdentBitPowerEntity(50, 60, 'Baz', 3);
+      $entity1 = new CompositeIdentBitWeightEntity(10, 20, 'Foo', 0);
+      $entity2 = new CompositeIdentBitWeightEntity(30, 40, 'Bar', 1);
+      $entity3 = new CompositeIdentBitWeightEntity(50, 60, 'Baz', 3);
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'expanded' => false,
               'em' => 'default',
-              'class' => self::COMPOSITE_IDENT_BIT_POWER_CLASS,
+              'class' => self::COMPOSITE_IDENT_BIT_WEIGHT_CLASS,
               'property' => 'name',
          ));
 
@@ -404,15 +404,15 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitSingleExpanded()
    {
-      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 4);
-      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 2);
+      $entity1 = new SingleIdentBitWeightEntity(1, 'Foo', 4);
+      $entity2 = new SingleIdentBitWeightEntity(2, 'Bar', 2);
 
       $this->persist(array ($entity1, $entity2));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'multiple' => false,
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'property' => 'name',
          ));
 
@@ -428,15 +428,15 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitMultipleExpanded()
    {
-      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 0);
-      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 1);
-      $entity3 = new SingleIdentBitPowerEntity(3, 'Bar', 2);
+      $entity1 = new SingleIdentBitWeightEntity(1, 'Foo', 0);
+      $entity2 = new SingleIdentBitWeightEntity(2, 'Bar', 1);
+      $entity3 = new SingleIdentBitWeightEntity(3, 'Bar', 2);
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'property' => 'name',
          ));
 
@@ -456,15 +456,15 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testOverrideChoices()
    {
-      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 2);
-      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 3);
-      $entity3 = new SingleIdentBitPowerEntity(3, 'Baz', 4);
+      $entity1 = new SingleIdentBitWeightEntity(1, 'Foo', 2);
+      $entity2 = new SingleIdentBitWeightEntity(2, 'Bar', 3);
+      $entity3 = new SingleIdentBitWeightEntity(3, 'Baz', 4);
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'em' => 'default',
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'multiple' => false,
               'expanded' => false,
               // not all persisted entities should be displayed
@@ -482,9 +482,9 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testDisallowChoicesThatAreNotIncluded_choicesSingleIdentifier()
    {
-      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 0);
-      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 1);
-      $entity3 = new SingleIdentBitPowerEntity(3, 'Baz', 2);
+      $entity1 = new SingleIdentBitWeightEntity(1, 'Foo', 0);
+      $entity2 = new SingleIdentBitWeightEntity(2, 'Bar', 1);
+      $entity3 = new SingleIdentBitWeightEntity(3, 'Baz', 2);
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
@@ -492,7 +492,7 @@ class EntityBitTypeTest extends TypeTestCase
               'em' => 'default',
               'multiple' => false,
               'expanded' => false,
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'choices' => array ($entity1, $entity2),
               'property' => 'name',
          ));
@@ -505,9 +505,9 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testDisallowChoicesThatAreNotIncluded_choicesCompositeIdentifier()
    {
-      $entity1 = new CompositeIdentBitPowerEntity(10, 20, 'Foo', 0);
-      $entity2 = new CompositeIdentBitPowerEntity(30, 40, 'Bar', 1);
-      $entity3 = new CompositeIdentBitPowerEntity(50, 60, 'Baz', 2);
+      $entity1 = new CompositeIdentBitWeightEntity(10, 20, 'Foo', 0);
+      $entity2 = new CompositeIdentBitWeightEntity(30, 40, 'Bar', 1);
+      $entity3 = new CompositeIdentBitWeightEntity(50, 60, 'Baz', 2);
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
@@ -515,7 +515,7 @@ class EntityBitTypeTest extends TypeTestCase
               'em' => 'default',
               'multiple' => false,
               'expanded' => false,
-              'class' => self::COMPOSITE_IDENT_BIT_POWER_CLASS,
+              'class' => self::COMPOSITE_IDENT_BIT_WEIGHT_CLASS,
               'choices' => array ($entity1, $entity2),
               'property' => 'name',
          ));
@@ -528,19 +528,19 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testDisallowChoicesThatAreNotIncludedQueryBuilderSingleIdentifier()
    {
-      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 0);
-      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 1);
-      $entity3 = new SingleIdentBitPowerEntity(3, 'Baz', 2);
+      $entity1 = new SingleIdentBitWeightEntity(1, 'Foo', 0);
+      $entity2 = new SingleIdentBitWeightEntity(2, 'Bar', 1);
+      $entity3 = new SingleIdentBitWeightEntity(3, 'Baz', 2);
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
-      $repository = $this->em->getRepository(self::SINGLE_IDENT_BIT_POWER_CLASS);
+      $repository = $this->em->getRepository(self::SINGLE_IDENT_BIT_WEIGHT_CLASS);
 
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'em' => 'default',
               'multiple' => false,
               'expanded' => false,
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'query_builder' => $repository->createQueryBuilder('e')
                  ->where('e.id IN (1, 2)'),
               'property' => 'name',
@@ -554,9 +554,9 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testDisallowChoicesThatAreNotIncludedQueryBuilderAsClosureSingleIdentifier()
    {
-      $entity1 = new SingleIdentBitPowerEntity(1, 'Foo', 0);
-      $entity2 = new SingleIdentBitPowerEntity(2, 'Bar', 1);
-      $entity3 = new SingleIdentBitPowerEntity(3, 'Baz', 2);
+      $entity1 = new SingleIdentBitWeightEntity(1, 'Foo', 0);
+      $entity2 = new SingleIdentBitWeightEntity(2, 'Bar', 1);
+      $entity3 = new SingleIdentBitWeightEntity(3, 'Baz', 2);
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
@@ -564,7 +564,7 @@ class EntityBitTypeTest extends TypeTestCase
               'em' => 'default',
               'multiple' => false,
               'expanded' => false,
-              'class' => self::SINGLE_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'query_builder' => function ($repository)
               {
                  return $repository->createQueryBuilder('e')
@@ -581,9 +581,9 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testDisallowChoicesThatAreNotIncludedQueryBuilderAsClosureCompositeIdentifier()
    {
-      $entity1 = new CompositeIdentBitPowerEntity(10, 20, 'Foo', 0);
-      $entity2 = new CompositeIdentBitPowerEntity(30, 40, 'Bar', 1);
-      $entity3 = new CompositeIdentBitPowerEntity(50, 60, 'Baz', 2);
+      $entity1 = new CompositeIdentBitWeightEntity(10, 20, 'Foo', 0);
+      $entity2 = new CompositeIdentBitWeightEntity(30, 40, 'Bar', 1);
+      $entity3 = new CompositeIdentBitWeightEntity(50, 60, 'Baz', 2);
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
@@ -591,7 +591,7 @@ class EntityBitTypeTest extends TypeTestCase
               'em' => 'default',
               'multiple' => false,
               'expanded' => false,
-              'class' => self::COMPOSITE_IDENT_BIT_POWER_CLASS,
+              'class' => self::COMPOSITE_IDENT_BIT_WEIGHT_CLASS,
               'query_builder' => function ($repository)
               {
                  return $repository->createQueryBuilder('e')
@@ -608,7 +608,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitSingleStringIdentifier()
    {
-      $entity1 = new SingleStringIdentBitPowerEntity('foo', 'Foo', 0);
+      $entity1 = new SingleStringIdentBitWeightEntity('foo', 'Foo', 0);
 
       $this->persist(array ($entity1));
 
@@ -616,7 +616,7 @@ class EntityBitTypeTest extends TypeTestCase
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
-              'class' => self::SINGLE_STRING_IDENT_BIT_POWER_CLASS,
+              'class' => self::SINGLE_STRING_IDENT_BIT_WEIGHT_CLASS,
               'property' => 'name',
          ));
 
@@ -629,7 +629,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitCompositeStringIdentifier()
    {
-      $entity1 = new CompositeStringIdentBitPowerEntity('foo1', 'foo2', 'Foo', 4);
+      $entity1 = new CompositeStringIdentBitWeightEntity('foo1', 'foo2', 'Foo', 4);
 
       $this->persist(array ($entity1));
 
@@ -637,7 +637,7 @@ class EntityBitTypeTest extends TypeTestCase
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
-              'class' => self::COMPOSITE_STRING_IDENT_BIT_POWER_CLASS,
+              'class' => self::COMPOSITE_STRING_IDENT_BIT_WEIGHT_CLASS,
               'property' => 'name',
          ));
 

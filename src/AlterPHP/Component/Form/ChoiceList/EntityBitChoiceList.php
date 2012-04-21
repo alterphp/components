@@ -62,20 +62,20 @@ class EntityBitChoiceList extends ArrayChoiceList
     */
    private $unitOfWork;
    private $propertyPath;
-   private $bitPowerPropertyPath;
+   private $bitWeightPropertyPath;
 
    /**
     * Constructor.
     *
     * @param EntityManager         $em               An EntityManager instance
     * @param string                $class            The class name
-    * @param string                $bitPowerProperty The property name
+    * @param string                $bitWeightProperty The property name
     * @param string                $property         The property name
     * @param QueryBuilder|\Closure $queryBuilder     An optional query builder
     * @param array|\Closure        $choices          An array of choices or a function returning an array
     */
    public function __construct(
-   EntityManager $em, $class, $bitPowerProperty, $property = null, $queryBuilder = null, $choices = null
+   EntityManager $em, $class, $bitWeightProperty, $property = null, $queryBuilder = null, $choices = null
    )
    {
       // If a query builder was passed, it must be a closure or QueryBuilder
@@ -103,12 +103,12 @@ class EntityBitChoiceList extends ArrayChoiceList
       //Se sert-on de l'identifier du coup ?
       $this->identifier = $em->getClassMetadata($class)->getIdentifierFieldNames();
 
-      // bitPower property
-      if (! $em->getClassMetadata($class)->isUniqueField($bitPowerProperty))
+      // bitWeight property
+      if (! $em->getClassMetadata($class)->isUniqueField($bitWeightProperty))
       {
-         throw new \InvalidArgumentException('The bitpower property of a entitybit field must be a unique column');
+         throw new \InvalidArgumentException('The bitweight property of a entitybit field must be a unique column');
       }
-      $this->bitPowerPropertyPath = new PropertyPath($bitPowerProperty);
+      $this->bitWeightPropertyPath = new PropertyPath($bitWeightProperty);
 
       // The property option defines, which property (path) is used for
       // displaying entities as strings
@@ -202,20 +202,20 @@ class EntityBitChoiceList extends ArrayChoiceList
             $value = (string) $entity;
          }
 
-         $bitPower = $this->getBitPowerValue($entity);
+         $bitWeight = $this->getBitWeightValue($entity);
 
          if (null === $group)
          {
             // Flat list of choices
-            $this->choices[$bitPower] = $value;
+            $this->choices[$bitWeight] = $value;
          }
          else
          {
             // Nested choices
-            $this->choices[$group][$bitPower] = $value;
+            $this->choices[$group][$bitWeight] = $value;
          }
 
-         $this->entities[$bitPower] = $entity;
+         $this->entities[$bitWeight] = $entity;
       }
    }
 
@@ -279,12 +279,12 @@ class EntityBitChoiceList extends ArrayChoiceList
             // should we clone the builder?
             $alias = $qb->getRootAlias();
 
-            $where = $qb->expr()->eq($alias . '.' . $this->bitPowerPropertyPath, $key);
+            $where = $qb->expr()->eq($alias . '.' . $this->bitWeightPropertyPath, $key);
 
             return $qb->andWhere($where)->getQuery()->getSingleResult();
          }
 
-         return $this->em->getRepository($this->class)->findOneBy(array($this->bitPowerPropertyPath => $key));
+         return $this->em->getRepository($this->class)->findOneBy(array($this->bitWeightPropertyPath => $key));
       }
       catch (NoResultException $e)
       {
@@ -293,7 +293,7 @@ class EntityBitChoiceList extends ArrayChoiceList
    }
 
    /**
-    * Returns the values of the bitPower field of an entity.
+    * Returns the values of the bitWeight field of an entity.
     *
     * Doctrine must know about this entity, that is, the entity must already
     * be persisted or added to the identity map before. Otherwise an
@@ -305,14 +305,14 @@ class EntityBitChoiceList extends ArrayChoiceList
     *
     * @throws FormException  If the entity does not exist in Doctrine's identity map
     */
-   public function getBitPowerValue($entity)
+   public function getBitWeightValue($entity)
    {
       if (!$this->unitOfWork->isInIdentityMap($entity))
       {
          throw new FormException('Entities passed to the choice field must be managed');
       }
 
-      return $this->bitPowerPropertyPath->getValue($entity);
+      return $this->bitWeightPropertyPath->getValue($entity);
    }
 
 }
