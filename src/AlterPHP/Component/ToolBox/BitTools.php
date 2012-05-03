@@ -1,5 +1,7 @@
 <?php
 
+namespace AlterPHP\Component\ToolBox;
+
 /**
  * Description of BitTools
  *
@@ -7,9 +9,6 @@
  * @subpackage ToolBox
  * @author     pcb <pc.bertineau@alterphp.com>
  */
-
-namespace AlterPHP\Component\ToolBox;
-
 class BitTools
 {
 

@@ -10,7 +10,7 @@ if (!is_dir(VENDOR_PATH)) {
 }
 
 $deps = array(
-    array('Symfony', 'http://github.com/symfony/symfony.git', 'v2.0.11'),
+    array('Symfony', 'http://github.com/symfony/symfony.git', 'v2.0.13'),
     array('Doctrine/ORM', 'https://github.com/doctrine/doctrine2.git', '2.1.6'),
     array('Doctrine/Common', 'https://github.com/doctrine/common.git', '2.1.4'),
     array('Doctrine/DBAL', 'https://github.com/doctrine/dbal.git', '2.1.6'),
