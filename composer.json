@@ -1,0 +1,21 @@
+{
+    "name": "alterphp/component",
+    "description": "PHP 5.3+ components",
+    "homepage": "https://github.com/alterphp/component",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Pierre-Charles Bertineau",
+            "email": "pc.bertineau@alterphp.com",
+            "homepage": "http://blog.alterphp.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/symfony":  ">=2.0.9,<2.1.0-dev",
+        "doctrine/common": "2.1.*"
+    },
+    "autoload": {
+        "psr-0": { "AlterPHP\\Component": "src/" }
+    }
+}
