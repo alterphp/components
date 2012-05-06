@@ -1,7 +1,7 @@
 {
-    "name": "alterphp/component",
+    "name": "alterphp/components",
     "description": "PHP 5.3+ components",
-    "homepage": "https://github.com/alterphp/component",
+    "homepage": "https://github.com/alterphp/components",
     "type": "library",
     "authors": [
         {
