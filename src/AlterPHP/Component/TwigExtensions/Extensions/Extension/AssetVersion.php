@@ -14,7 +14,7 @@ namespace AlterPHP\Component\TwigExtensions\Extension;
  * @package Twig
  * @subpackage Twig-extensions
  */
-class AlterPHP_TwigExtensions_Extension_AssetVersion extends \Twig_Extension
+class AlterPHP_Component_TwigExtensions_Extension_AssetVersion extends \Twig_Extension
 {
 
    /**
