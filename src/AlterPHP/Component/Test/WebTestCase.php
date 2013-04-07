@@ -1,8 +1,8 @@
 <?php
 
-namespace Sellermania\SellerBundle\Component\OverSf2\Test;
+namespace AlterPHP\Component\Test;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\DomCrawler\Link;
 
@@ -12,17 +12,18 @@ use Symfony\Component\DomCrawler\Link;
  * @subpackage Test
  * @author     pcb <pc.bertineau@alterphp.com>
  */
-class WebTestCase extends BaseWebTestCase
+class WebTestCase extends BaseTestCase
 {
 
    /**
+    * EntityManager
     * @var \Doctrine\ORM\EntityManager
     */
    protected $em;
 
    /**
+    * Test Client
     * @var \Symfony\Bundle\FrameworkBundle\Client
-    * client qui simule la navigation
     */
    protected $client;
 
@@ -45,7 +46,6 @@ class WebTestCase extends BaseWebTestCase
    protected $logger;
 
    /**
-    * Prépare chaque test (réinitialise le client, affecte les membres de l'instance de la classe)
     * @return void
     */
    public function setUp()
@@ -60,12 +60,13 @@ class WebTestCase extends BaseWebTestCase
 
       $this->client = $this->createClient();
 
-      //XXX: Surveiller ce bug : https://github.com/symfony/symfony/issues/1726
+      //XXX: Follow this bug : https://github.com/symfony/symfony/issues/1726
       //$this->client->insulate();
-      //On force la redirection
+
+      //Redirections is forced by default
       $this->client->followRedirects();
 
-      //On invalide la session...
+      //Session is invalidated
       $session = $this->client->getContainer()->get('session');
       if (isset($session))
       {
@@ -78,7 +79,14 @@ class WebTestCase extends BaseWebTestCase
       $this->logger = $this->client->getContainer()->get('logger');
       $this->router = $this->client->getContainer()->get('router');
 
-      $this->logger->info('############## Starting ' . $this->getName() . ' ##############');
+      $this->logger->info('######## Starting ' . $this->getName() . ' at '. time() .' ########');
+   }
+
+   public function tearDown()
+   {
+      //close log
+      $this->logger->info('#### Ending ' . $this->getName() . ' at '. time() .' ####');
+
    }
 
    /**
