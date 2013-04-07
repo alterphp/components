@@ -2,8 +2,6 @@
 
 namespace AlterPHP\Component\TwigExtensions\Extension;
 
-use Symfony\Bundle\AsseticBundle\Twig\AsseticExtension;
-
 /**
  * This file is part of Twig.
  *
@@ -16,7 +14,7 @@ use Symfony\Bundle\AsseticBundle\Twig\AsseticExtension;
  * @package Twig
  * @subpackage Twig-extensions
  */
-class Twig_Extensions_Extension_AssetVersion extends AsseticExtension
+class AlterPHP_TwigExtensions_Extension_AssetVersion extends \Twig_Extension
 {
 
    /**
@@ -52,8 +50,4 @@ function asset_with_version_filter($value, $assetVersion = '20121002')
    $urlParts = explode('?', $value);
 
    return $urlParts[0] . '?' . urlencode($assetVersion);
-
-
-
-   return str_replace("\n", $sep . "\n", $value);
 }
