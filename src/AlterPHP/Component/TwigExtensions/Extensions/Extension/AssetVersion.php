@@ -1,7 +1,5 @@
 <?php
 
-namespace AlterPHP\Component\TwigExtensions\Extension;
-
 /**
  * This file is part of Twig.
  *
