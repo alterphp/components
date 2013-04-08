@@ -25,12 +25,26 @@ class AssetVersion extends \Twig_Extension
    public function getFilters()
    {
       $filters = array (
-              'asset_with_version' => new Twig_Filter_Function(
-                 'asset_with_version_filter', array ('needs_environment' => true)
-              ),
+              'asset_with_version' => new \Twig_Filter_Method($this, 'asset_with_version_filter'),
       );
 
       return $filters;
+   }
+
+   public function asset_with_version_filter($value, $assetVersion = '20121002')
+   {
+      $urlParts = explode('?', $value);
+
+       if ($assetVersion instanceof \DateTime)
+       {
+          $cacheBuster = $assetVersion->format('YmdHis');
+       }
+       else
+       {
+          $cacheBuster = urlencode($assetVersion);
+       }
+
+      return $urlParts[0] . '?' . $cacheBuster;
    }
 
    /**
@@ -43,11 +57,4 @@ class AssetVersion extends \Twig_Extension
       return 'AssetVersion';
    }
 
-}
-
-function asset_with_version_filter($value, $assetVersion = '20121002')
-{
-   $urlParts = explode('?', $value);
-
-   return $urlParts[0] . '?' . urlencode($assetVersion);
 }
