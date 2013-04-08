@@ -1,5 +1,7 @@
 <?php
 
+namespace AlterPHP\Component\TwigExtensions\Extension;
+
 /**
  * This file is part of Twig.
  *
@@ -12,7 +14,7 @@
  * @package Twig
  * @subpackage Twig-extensions
  */
-class AlterPHP_Component_TwigExtensions_Extension_AssetVersion extends \Twig_Extension
+class AssetVersion extends \Twig_Extension
 {
 
    /**
