@@ -12,6 +12,11 @@ namespace AlterPHP\Component\ToolBox;
 class BitTools
 {
 
+   public static function hasActiveBit($value, $bitWeight)
+   {
+      return ($value & pow(2, $bitWeight)) > 0;
+   }
+
    /**
     * Return an array of active bits in the binary representation of the given integer
     * @param integer $int
