@@ -12,6 +12,27 @@ use AlterPHP\Component\ToolBox\BitTools;
  */
 class BitToolsTest extends \PHPUnit_Framework_TestCase
 {
+   public function testHasActiveBit()
+   {
+      $testValue1 = 7;
+      $testBitWeight1 = 1;
+      $expect1 = true;
+      $result1 = BitTools::hasActiveBit($testValue1, $testBitWeight1);
+      $this->assertEquals($expect1, $result1);
+
+      $testValue2 = 5;
+      $testBitWeight2 = 1;
+      $expect2 = false;
+      $result2 = BitTools::hasActiveBit($testValue2, $testBitWeight2);
+      $this->assertEquals($expect2, $result2);
+
+      $testValue3 = 5;
+      $testBitWeight3 = 3;
+      $expect3 = false;
+      $result3 = BitTools::hasActiveBit($testValue3, $testBitWeight3);
+      $this->assertEquals($expect3, $result3);
+   }
+
    public function testGetBitArrayFromInt()
    {
       $testValue1 = 123456;

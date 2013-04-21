@@ -12,6 +12,12 @@ namespace AlterPHP\Component\ToolBox;
 class BitTools
 {
 
+   /**
+    * Checks that a bit is "contained" in the value
+    * @param int $value
+    * @param int $bitWeight
+    * @return boolean
+    */
    public static function hasActiveBit($value, $bitWeight)
    {
       return ($value & pow(2, $bitWeight)) > 0;
