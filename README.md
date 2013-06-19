@@ -1,6 +1,8 @@
 AlterPHP Components
 ====================
 
+
+
 Some components I use in my developments (mostly with Symfony2)
 
 [![Build Status](https://secure.travis-ci.org/alterphp/components.png?branch=master)](http://travis-ci.org/alterphp/components)
@@ -33,26 +35,12 @@ with the ability to set cookies from the constructor.
 Installation in a Symfony2 project
 --------------------
 
-Add following lines in the deps file :
+Add following lines in the composer file :
 
-    [alterphp]
-        git=http://github.com/alterphp/components.git
-        target=alterphp/components
+    "require": {
+        ...,
+        "alterphp/components": "1.0.*"
 
 Then run :
 
-    bin/vendors install
-
-Finally, in app/autoload.php, make the following add :
-
-```php
-<?php
-
-// ...
-
-$loader->registerNamespaces(array (
-    'Symfony' => array (__DIR__ . '/../vendor/symfony/src', __DIR__ . '/../vendor/bundles'),
-    // ...
-   ' AlterPHP'   => __DIR__.'/../vendor/alterphp/components/src',
-));
-```
+    composer --dev install
