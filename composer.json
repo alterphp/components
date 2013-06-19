@@ -1,6 +1,6 @@
 {
     "name": "alterphp/components",
-    "description": "PHP 5.3+ over Symfony2",
+    "description": "PHP 5.3+ components over Symfony2",
     "homepage": "https://github.com/alterphp/components",
     "type": "library",
     "license": "MIT",
