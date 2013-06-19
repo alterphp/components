@@ -5,12 +5,12 @@ namespace AlterPHP\Component\Form\ChoiceList;
 use Symfony\Component\Form\Util\PropertyPath;
 use Symfony\Component\Form\Exception\FormException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ArrayChoiceList;
+use Symfony\Component\Form\Extension\Core\ChoiceList\SimpleChoiceList;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\NoResultException;
 
-class EntityBitChoiceList extends ArrayChoiceList
+class EntityBitChoiceList extends SimpleChoiceList
 {
 
    /**
@@ -80,17 +80,14 @@ class EntityBitChoiceList extends ArrayChoiceList
    {
       // If a query builder was passed, it must be a closure or QueryBuilder
       // instance
-      if (!(null === $queryBuilder || $queryBuilder instanceof QueryBuilder || $queryBuilder instanceof \Closure))
-      {
+      if (!(null === $queryBuilder || $queryBuilder instanceof QueryBuilder || $queryBuilder instanceof \Closure)) {
          throw new UnexpectedTypeException($queryBuilder, 'Doctrine\ORM\QueryBuilder or \Closure');
       }
 
-      if ($queryBuilder instanceof \Closure)
-      {
+      if ($queryBuilder instanceof \Closure) {
          $queryBuilder = $queryBuilder($em->getRepository($class));
 
-         if (!$queryBuilder instanceof QueryBuilder)
-         {
+         if (!$queryBuilder instanceof QueryBuilder) {
             throw new UnexpectedTypeException($queryBuilder, 'Doctrine\ORM\QueryBuilder');
          }
       }
@@ -104,21 +101,18 @@ class EntityBitChoiceList extends ArrayChoiceList
       $this->identifier = $em->getClassMetadata($class)->getIdentifierFieldNames();
 
       // bitWeight property
-      if (! $em->getClassMetadata($class)->isUniqueField($bitWeightProperty))
-      {
+      if (! $em->getClassMetadata($class)->isUniqueField($bitWeightProperty)) {
          throw new \InvalidArgumentException('The bitweight property of a entitybit field must be a unique column');
       }
       $this->bitWeightPropertyPath = new PropertyPath($bitWeightProperty);
 
       // The property option defines, which property (path) is used for
       // displaying entities as strings
-      if ($property)
-      {
+      if ($property) {
          $this->propertyPath = new PropertyPath($property);
       }
 
-      if (!is_array($choices) && !$choices instanceof \Closure && !is_null($choices))
-      {
+      if (!is_array($choices) && !$choices instanceof \Closure && !is_null($choices)) {
          throw new UnexpectedTypeException($choices, 'array or \Closure or null');
       }
 
@@ -140,16 +134,11 @@ class EntityBitChoiceList extends ArrayChoiceList
    {
       parent::load();
 
-      if (is_array($this->choices))
-      {
+      if (is_array($this->choices)) {
          $entities = $this->choices;
-      }
-      elseif ($qb = $this->queryBuilder)
-      {
+      } elseif ($qb = $this->queryBuilder) {
          $entities = $qb->getQuery()->execute();
-      }
-      else
-      {
+      } else {
          $entities = $this->em->getRepository($this->class)->findAll();
       }
 
@@ -177,25 +166,19 @@ class EntityBitChoiceList extends ArrayChoiceList
     */
    private function loadEntities($entities, $group = null)
    {
-      foreach ($entities as $key => $entity)
-      {
-         if (is_array($entity))
-         {
+      foreach ($entities as $key => $entity) {
+         if (is_array($entity)) {
             // Entities are in named groups
             $this->loadEntities($entity, $key);
             continue;
          }
 
-         if ($this->propertyPath)
-         {
+         if ($this->propertyPath) {
             // If the property option was given, use it
             $value = $this->propertyPath->getValue($entity);
-         }
-         else
-         {
+         } else {
             // Otherwise expect a __toString() method in the entity
-            if (!method_exists($entity, '__toString'))
-            {
+            if (!method_exists($entity, '__toString')) {
                throw new FormException('Entities passed to the choice field must have a "__toString()" method defined (or you can also override the "property" option).');
             }
 
@@ -204,13 +187,10 @@ class EntityBitChoiceList extends ArrayChoiceList
 
          $bitWeight = $this->getBitWeightValue($entity);
 
-         if (null === $group)
-         {
+         if (null === $group) {
             // Flat list of choices
             $this->choices[$bitWeight] = $value;
-         }
-         else
-         {
+         } else {
             // Nested choices
             $this->choices[$group][$bitWeight] = $value;
          }
@@ -230,8 +210,7 @@ class EntityBitChoiceList extends ArrayChoiceList
     */
    public function getEntities()
    {
-      if (!$this->loaded)
-      {
+      if (!$this->loaded) {
          $this->load();
       }
 
@@ -256,26 +235,14 @@ class EntityBitChoiceList extends ArrayChoiceList
     */
    public function getEntity($key)
    {
-      if (!$this->loaded)
-      {
+      if (!$this->loaded) {
          $this->load();
       }
 
-      try
-      {
-         /*if (count($this->identifier) > 1)
-         {
-            // $key is a collection index
-            $entities = $this->getEntities();
-
-            return isset($entities[$key]) ? $entities[$key] : null;
-         }
-         else*/if ($this->entities)
-         {
+      try {
+         if ($this->entities) {
             return isset($this->entities[$key]) ? $this->entities[$key] : null;
-         }
-         elseif ($qb = $this->queryBuilder)
-         {
+         } elseif ($qb = $this->queryBuilder) {
             // should we clone the builder?
             $alias = $qb->getRootAlias();
 
@@ -285,9 +252,7 @@ class EntityBitChoiceList extends ArrayChoiceList
          }
 
          return $this->em->getRepository($this->class)->findOneBy(array($this->bitWeightPropertyPath => $key));
-      }
-      catch (NoResultException $e)
-      {
+      } catch (NoResultException $e) {
          return null;
       }
    }
@@ -307,8 +272,7 @@ class EntityBitChoiceList extends ArrayChoiceList
     */
    public function getBitWeightValue($entity)
    {
-      if (!$this->unitOfWork->isInIdentityMap($entity))
-      {
+      if (!$this->unitOfWork->isInIdentityMap($entity)) {
          throw new FormException('Entities passed to the choice field must be managed');
       }
 

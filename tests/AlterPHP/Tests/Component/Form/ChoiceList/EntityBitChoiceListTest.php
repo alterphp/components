@@ -3,7 +3,7 @@
 namespace AlterPHP\Tests\Component\Form\ChoiceList;
 
 use AlterPHP\Tests\Component\Fixtures\SingleIdentBitWeightEntity;
-use Symfony\Tests\Bridge\Doctrine\DoctrineOrmTestCase;
+use Symfony\Bridge\Doctrine\Tests\DoctrineOrmTestCase;
 use AlterPHP\Component\Form\ChoiceList\EntityBitChoiceList;
 
 class EntityBitChoiceListTest extends DoctrineOrmTestCase

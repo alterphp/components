@@ -4,14 +4,13 @@ namespace AlterPHP\Tests\Component\Form\Type;
 
 use AlterPHP\Component\Form\AlterPHPExtension;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Symfony\Tests\Component\Form\Extension\Core\Type\TypeTestCase;
-use Symfony\Tests\Bridge\Doctrine\DoctrineOrmTestCase;
+use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+use Symfony\Bridge\Doctrine\Tests\DoctrineOrmTestCase;
 use AlterPHP\Tests\Component\Fixtures\SingleIdentBitWeightEntity;
 use AlterPHP\Tests\Component\Fixtures\SingleStringIdentBitWeightEntity;
 use AlterPHP\Tests\Component\Fixtures\CompositeIdentBitWeightEntity;
 use AlterPHP\Tests\Component\Fixtures\CompositeStringIdentBitWeightEntity;
 use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class EntityBitTypeTest extends TypeTestCase
 {
@@ -25,8 +24,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    protected function setUp()
    {
-      if (!class_exists('Doctrine\\Common\\Version'))
-      {
+      if (!class_exists('Doctrine\\Common\\Version')) {
          $this->markTestSkipped('Doctrine is not available.');
       }
 
@@ -42,21 +40,15 @@ class EntityBitTypeTest extends TypeTestCase
               $this->em->getClassMetadata(self::COMPOSITE_STRING_IDENT_BIT_WEIGHT_CLASS),
       );
 
-      try
-      {
+      try {
          $schemaTool->dropSchema($classes);
-      }
-      catch (\Exception $e)
-      {
+      } catch (\Exception $e) {
 
       }
 
-      try
-      {
+      try {
          $schemaTool->createSchema($classes);
-      }
-      catch (\Exception $e)
-      {
+      } catch (\Exception $e) {
 
       }
    }
@@ -77,8 +69,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    protected function persist(array $entities)
    {
-      foreach ($entities as $entity)
-      {
+      foreach ($entities as $entity) {
          $this->em->persist($entity);
       }
 
@@ -125,8 +116,7 @@ class EntityBitTypeTest extends TypeTestCase
       $field = $this->factory->createNamed('entitybit', 'name', null, array (
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
-              'query_builder' => function ()
-              {
+              'query_builder' => function () {
                  return new \stdClass();
               },
          ));
@@ -565,8 +555,7 @@ class EntityBitTypeTest extends TypeTestCase
               'multiple' => false,
               'expanded' => false,
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
-              'query_builder' => function ($repository)
-              {
+              'query_builder' => function ($repository) {
                  return $repository->createQueryBuilder('e')
                        ->where('e.id IN (1, 2)');
               },
@@ -592,8 +581,7 @@ class EntityBitTypeTest extends TypeTestCase
               'multiple' => false,
               'expanded' => false,
               'class' => self::COMPOSITE_IDENT_BIT_WEIGHT_CLASS,
-              'query_builder' => function ($repository)
-              {
+              'query_builder' => function ($repository) {
                  return $repository->createQueryBuilder('e')
                        ->where('e.id1 IN (10, 50)');
               },
@@ -649,9 +637,7 @@ class EntityBitTypeTest extends TypeTestCase
       $this->assertEquals(4, $field->getClientData());
    }
 
-   protected
-
-   function createRegistryMock($name, $em)
+   public function createRegistryMock($name, $em)
    {
       $registry = $this->getMock('Symfony\Bridge\Doctrine\RegistryInterface');
       $registry->expects($this->any())
@@ -663,4 +649,3 @@ class EntityBitTypeTest extends TypeTestCase
    }
 
 }
-

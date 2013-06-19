@@ -5,13 +5,7 @@ namespace AlterPHP\Component\Form\Type;
 use AlterPHP\Component\Form\ChoiceList\EntityBitChoiceList;
 use AlterPHP\Component\Form\DataTransformer\EntityBitToIdTransformer;
 use AlterPHP\Component\Form\DataTransformer\EntityBitsToArrayTransformer;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface;
-use Symfony\Component\Form\Extension\Core\DataTransformer\ArrayToBooleanChoicesTransformer;
-use Symfony\Component\Form\Extension\Core\DataTransformer\ArrayToChoicesTransformer;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\Exception\FormException;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -25,14 +19,11 @@ class EntityBitType extends AbstractType
       $this->registry = $registry;
    }
 
-   public function buildForm(FormBuilder $builder, array $options)
+   public function buildForm(FormBuilderInterface $builder, array $options)
    {
-      if ($options['multiple'])
-      {
+      if ($options['multiple']) {
          $builder->prependClientTransformer(new EntityBitsToArrayTransformer($options['choice_list']));
-      }
-      else
-      {
+      } else {
          $builder->prependClientTransformer(new EntityBitToIdTransformer($options['choice_list']));
       }
    }
@@ -63,8 +54,7 @@ class EntityBitType extends AbstractType
 
       $options = array_merge($parentOptions, $specificDefaultOptions, $options);
 
-      if (!isset($options['choice_list']))
-      {
+      if (!isset($options['choice_list'])) {
          $options['choice_list'] = new EntityBitChoiceList(
                $this->registry->getEntityManager($options['em']),
                $options['class'],
@@ -78,7 +68,7 @@ class EntityBitType extends AbstractType
       return $options;
    }
 
-   public function getParent(array $options)
+   public function getParent()
    {
       return 'choice';
    }

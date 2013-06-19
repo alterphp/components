@@ -3,12 +3,10 @@
 namespace AlterPHP\Component\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\Exception\FormException;
+use Symfony\Component\Form\FormBuilderInterface;
 use AlterPHP\Component\Form\DataTransformer\BitWeightSumToChoicesTransformer;
 use AlterPHP\Component\Form\DataTransformer\BitWeightToChoicesTransformer;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ArrayChoiceList;
+use Symfony\Component\Form\Extension\Core\ChoiceList\SimpleChoiceList;
 
 class ChoiceBitType extends ChoiceType
 {
@@ -16,14 +14,11 @@ class ChoiceBitType extends ChoiceType
    /**
     * {@inheritdoc}
     */
-   public function buildForm(FormBuilder $builder, array $options)
+   public function buildForm(FormBuilderInterface $builder, array $options)
    {
-      if ($options['multiple'])
-      {
+      if ($options['multiple']) {
          $builder->prependClientTransformer(new BitWeightSumToChoicesTransformer($options['choice_list'], $options['expanded']));
-      }
-      else
-      {
+      } else {
          $builder->prependClientTransformer(new BitWeightToChoicesTransformer($options['choice_list']));
       }
    }
@@ -47,15 +42,14 @@ class ChoiceBitType extends ChoiceType
 
       $options = array_merge($parentOptions, $specificDefaultOptions, $options);
 
-      if (!isset($options['choice_list']))
-      {
-         $options['choice_list'] = new ArrayChoiceList($options['choices']);
+      if (!isset($options['choice_list'])) {
+         $options['choice_list'] = new SimpleChoiceList($options['choices']);
       }
 
       return $options;
    }
 
-   public function getParent(array $options)
+   public function getParent()
    {
       return 'choice';
    }

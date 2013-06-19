@@ -4,7 +4,7 @@ namespace AlterPHP\Tests\Component\Form\Type;
 
 use AlterPHP\Component\Form\AlterPHPExtension;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Symfony\Tests\Component\Form\Extension\Core\Type\TypeTestCase;
+use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
 
 class ChoiceBitTypeTest extends TypeTestCase
 {
@@ -64,8 +64,7 @@ class ChoiceBitTypeTest extends TypeTestCase
               'choices' => $this->choices,
          ));
 
-      foreach ($form as $child)
-      {
+      foreach ($form as $child) {
          $this->assertFalse($child->isRequired());
       }
    }
