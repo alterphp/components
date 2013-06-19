@@ -1,11 +1,11 @@
 AlterPHP Components
 ====================
 
-
+_Compatible with Symfony 2.0.x branch ONLY, switch to newer version for furthermore compatibility._
 
 Some components I use in my developments (mostly with Symfony2)
 
-[![Build Status](https://secure.travis-ci.org/alterphp/components.png?branch=master)](http://travis-ci.org/alterphp/components)
+[![Build Status](https://secure.travis-ci.org/alterphp/components.png?branch=1.0.x)](http://travis-ci.org/alterphp/components)
 
 Components list
 --------------------
