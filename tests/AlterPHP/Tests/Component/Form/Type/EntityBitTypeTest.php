@@ -85,7 +85,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'required' => false,
@@ -101,7 +101,7 @@ class EntityBitTypeTest extends TypeTestCase
     */
    public function testConfigureQueryBuilderWithNonQueryBuilderAndNonClosure()
    {
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'query_builder' => new \stdClass(),
@@ -113,7 +113,7 @@ class EntityBitTypeTest extends TypeTestCase
     */
    public function testConfigureQueryBuilderWithClosureReturningNonQueryBuilder()
    {
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'query_builder' => function () {
@@ -126,7 +126,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSetDataSingleNull()
    {
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
@@ -140,7 +140,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSetDataSingleZero()
    {
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
@@ -154,7 +154,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSetDataMultipleExpandedNull()
    {
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
          ));
@@ -166,7 +166,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSetDataMultipleExpandedZero()
    {
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
          ));
@@ -178,7 +178,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSetDataMultipleNonExpandedNull()
    {
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'expanded' => false,
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
@@ -191,7 +191,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSetDataMultipleNonExpandedZero()
    {
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'expanded' => false,
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
@@ -204,7 +204,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitSingleExpandedNull()
    {
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'multiple' => false,
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
@@ -217,7 +217,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitSingleNonExpandedNull()
    {
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
@@ -231,7 +231,7 @@ class EntityBitTypeTest extends TypeTestCase
 
    public function testSubmitMultipleNull()
    {
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'expanded' => false,
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
@@ -249,7 +249,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
@@ -271,7 +271,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
@@ -295,7 +295,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'expanded' => false,
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
@@ -319,7 +319,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'expanded' => false,
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
@@ -347,7 +347,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'expanded' => false,
               'em' => 'default',
               'class' => self::COMPOSITE_IDENT_BIT_WEIGHT_CLASS,
@@ -372,7 +372,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'expanded' => false,
               'em' => 'default',
               'class' => self::COMPOSITE_IDENT_BIT_WEIGHT_CLASS,
@@ -399,7 +399,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'multiple' => false,
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
@@ -424,7 +424,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'property' => 'name',
@@ -452,7 +452,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'class' => self::SINGLE_IDENT_BIT_WEIGHT_CLASS,
               'multiple' => false,
@@ -478,7 +478,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'multiple' => false,
               'expanded' => false,
@@ -501,7 +501,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'multiple' => false,
               'expanded' => false,
@@ -526,7 +526,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $repository = $this->em->getRepository(self::SINGLE_IDENT_BIT_WEIGHT_CLASS);
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'multiple' => false,
               'expanded' => false,
@@ -550,7 +550,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'multiple' => false,
               'expanded' => false,
@@ -576,7 +576,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1, $entity2, $entity3));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'em' => 'default',
               'multiple' => false,
               'expanded' => false,
@@ -600,7 +600,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
@@ -621,7 +621,7 @@ class EntityBitTypeTest extends TypeTestCase
 
       $this->persist(array ($entity1));
 
-      $field = $this->factory->createNamed('entitybit', 'name', null, array (
+      $field = $this->factory->createNamed('name', 'entitybit', null, array (
               'multiple' => false,
               'expanded' => false,
               'em' => 'default',
