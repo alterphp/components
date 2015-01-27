@@ -51,7 +51,7 @@ class Mailer
         $this->options = $resolver->resolve($options);
     }
 
-    public function getAdminRecipient($name)
+    public function getAdminRecipient($name = null)
     {
         $recipientEmail = 'admin@alterphp.com';
 
@@ -63,7 +63,7 @@ class Mailer
         return $recipientEmail;
     }
 
-    public function getNoReplyEmail()
+    protected function getFallbackNoReplyEmail()
     {
         $emailFrom = 'contact@alterphp.com';
 
@@ -155,7 +155,7 @@ class Mailer
             ))
             ->setDefaults(array(
                 'tplShortDirectory'    => 'AppBundle:Email',
-                'noReplyEmail'         => $this->getNoReplyEmail(),
+                'noReplyEmail'         => $this->getFallbackNoReplyEmail(),
                 'bccAuto'              => false,
             ))
             ->setOptional(array(
