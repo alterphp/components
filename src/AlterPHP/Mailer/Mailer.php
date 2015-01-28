@@ -90,15 +90,18 @@ class Mailer
             }
         }
 
-        // Génération body
-        $tplFile = sprintf('%s/%s:%s.html.twig', $this->options['tplShortDirectory'], ucfirst($type), $name);
-        $body = $this->twig->render($tplFile, $data);
+        // Build subject
+        $subjectData = array_filter($data, 'is_string');
+        $subject = $this->buildSubject($type, $name, $subjectData);
+
+        // Build body
+        $body = $this->renderBody($type, $name, $data, $subject);
 
         // Send email
         try {
             $subjectData = array_filter($data, 'is_string');
             $message
-                ->setSubject($this->buildSubject($type, $name, $subjectData))
+                ->setSubject($subject)
                 ->setFrom($from)
                 ->setTo($to)
                 ->setBody($body, 'text/html')
@@ -125,6 +128,13 @@ class Mailer
         $subject = $this->t->trans($type . '.' . $name . '.subject', $subjectData, 'emails');
 
         return $subject;
+    }
+
+    public function renderBody($type, $name, $data, $subject)
+    {
+        $tplFile = sprintf('%s/%s:%s.html.twig', $this->options['tplShortDirectory'], ucfirst($type), $name);
+        
+        return $this->twig->render($tplFile, $data + [ 'subject' => $subject ]);
     }
 
     /**
@@ -154,7 +164,7 @@ class Mailer
                 'noReplyEmail',
             ))
             ->setDefaults(array(
-                'tplShortDirectory'    => 'AppBundle:email',
+                'tplShortDirectory'    => ':email',
                 'noReplyEmail'         => $this->getFallbackNoReplyEmail(),
                 'bccAuto'              => false,
             ))
