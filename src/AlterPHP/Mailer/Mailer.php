@@ -154,7 +154,7 @@ class Mailer
                 'noReplyEmail',
             ))
             ->setDefaults(array(
-                'tplShortDirectory'    => 'AppBundle:Email',
+                'tplShortDirectory'    => 'AppBundle:email',
                 'noReplyEmail'         => $this->getFallbackNoReplyEmail(),
                 'bccAuto'              => false,
             ))
