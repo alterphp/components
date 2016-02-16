@@ -1,6 +1,6 @@
 <?php
 
-namespace AlterPHP\Twig\Extension;
+namespace AlterPHP\Component\Twig\Extension;
 
 class Reflection extends \Twig_Extension
 {

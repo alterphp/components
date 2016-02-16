@@ -1,6 +1,6 @@
 <?php
 
-namespace AlterPHP\Mailer;
+namespace AlterPHP\Component\Mailer;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -133,7 +133,7 @@ class Mailer
     public function renderBody($type, $name, $data, $subject)
     {
         $tplFile = sprintf('%s/%s:%s.html.twig', $this->options['tplShortDirectory'], ucfirst($type), $name);
-        
+
         return $this->twig->render($tplFile, $data + [ 'subject' => $subject ]);
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace AlterPHP\Component\TwigExtensions\Extension;
+namespace AlterPHP\Component\Twig\Extension;
 
 use AlterPHP\Component\ToolBox\PolylineEncoder;
 
