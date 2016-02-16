@@ -21,7 +21,7 @@ class Reflection extends \Twig_Extension
 
         // Check that method is static AND public
         if ($refl->hasMethod($method) && $refl->getMethod($method)->isStatic() && $refl->getMethod($method)->isPublic()) {
-            return call_user_func($class.'::'.$method, $args);
+            return call_user_func_array($class.'::'.$method, $args);
         }
 
         throw new \RuntimeException(sprintf('Invalid static method call for class %s and method %s', $class, $method));
