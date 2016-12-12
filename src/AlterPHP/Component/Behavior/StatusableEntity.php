@@ -15,6 +15,14 @@ trait StatusableEntity
 
     protected static $statusValues = null;
 
+    protected static function getLowerCaseClassName()
+    {
+        $refClass = new \ReflectionClass(get_called_class());
+        $className = $refClass->getShortName();
+
+        return strtolower($className);
+    }
+
     /**
      * Returns status list, with or without labels.
      *
@@ -34,7 +42,7 @@ trait StatusableEntity
             $constantPrefix = 'STATUS_';
             foreach ($classConstants as $key => $val) {
                 if (substr($key, 0, strlen($constantPrefix)) === $constantPrefix) {
-                    static::$statusValues[$val] = strtolower($className).'.status.'.$val;
+                    static::$statusValues[$val] = static::getLowerCaseClassName().'.status.'.$val;
                 }
             }
         }
