@@ -26,15 +26,16 @@ trait StatusableEntity
     /**
      * Returns status list, with or without labels.
      *
-     * @param bool $withLabels
+     * @param bool  $withLabels
+     * @param array $filterStatus
      *
      * @return array
      */
-    public static function getStatusList($withLabels = false)
+    public static function getStatusList($withLabels = false, array $filterStatus = null)
     {
         // Build $statusValues if this is the first call
         if (static::$statusValues === null) {
-            static::$statusValues = [];
+            static::$statusValues = array();
             $refClass = new \ReflectionClass(get_called_class());
             $classConstants = $refClass->getConstants();
             $className = $refClass->getShortName();
@@ -47,10 +48,19 @@ trait StatusableEntity
             }
         }
 
+        $statusValues = static::$statusValues;
+
+        // Filter on specified status list
+        if (isset($filterStatus)) {
+            $statusValues = array_filter($statusValues, function ($key) use ($filterStatus) {
+                return in_array($key, $filterStatus);
+            }, ARRAY_FILTER_USE_KEY);
+        }
+
         if ($withLabels) {
-            return static::$statusValues;
+            return $statusValues;
         } else {
-            return array_keys(static::$statusValues);
+            return array_keys($statusValues);
         }
     }
 
