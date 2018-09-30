@@ -1,0 +1,87 @@
+<?php
+
+namespace AlterPHP\Component\Behavior;
+
+trait ValueListTrait
+{
+    /**
+     * Returns entity translation prefix.
+     *
+     * @return string
+     */
+    protected static function getLowerCaseClassName()
+    {
+        $refClass = new \ReflectionClass(get_called_class());
+        $className = $refClass->getShortName();
+
+        return strtolower($className);
+    }
+
+    /**
+     * Returns values list, with or without labels, for a given property.
+     *
+     * @param string $property
+     * @param bool   $withLabelsAsIndexes
+     * @param array  $filterValues
+     *
+     * @return array
+     */
+    public static function getValuesList(string $property, bool $withLabelsAsIndexes = false, array $filterValues = null)
+    {
+        $propertyValues = array();
+        $refClass = new \ReflectionClass(get_called_class());
+        $classConstants = $refClass->getConstants();
+        $className = $refClass->getShortName();
+
+        $constantPrefix = strtoupper($property).'_';
+        foreach ($classConstants as $key => $val) {
+            if (substr($key, 0, strlen($constantPrefix)) === $constantPrefix) {
+                $propertyValues[$val] = static::getLowerCaseClassName().'.'.strtolower($property).'.'.$val;
+            }
+        }
+
+        // Filter on specified status list
+        if (isset($filterValues)) {
+            $propertyValues = array_filter($propertyValues, function ($key) use ($filterValues) {
+                return in_array($key, $filterValues);
+            }, ARRAY_FILTER_USE_KEY);
+        }
+
+        if ($withLabelsAsIndexes) {
+            return array_flip($propertyValues);
+        }
+
+        return array_keys($propertyValues);
+    }
+
+    /**
+     * Checks that a value is valid for a given property.
+     *
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @throws \InvalidArgumentException
+     */
+    public static function checkAllowedValue(string $property, $value)
+    {
+        if (!in_array($value, static::getValuesList($property))) {
+            throw new \InvalidArgumentException(
+                sprintf('"%s" is not a valid value for "%s" property !', (string) $value, $property)
+            );
+        }
+    }
+
+    /**
+     * Get value label.
+     *
+     * @param string $property
+     *
+     * @return string
+     */
+    public function getValueLabel(string $property)
+    {
+        $valueList = array_flip($this->getValuesList($property, true));
+
+        return isset($valueList[$this->{$property}]) ? $valueList[$this->{$property}] : $this->{$property};
+    }
+}
