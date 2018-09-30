@@ -15,6 +15,11 @@ trait StatusableEntity
 
     protected static $statusValues = null;
 
+    /**
+     * Returns entity translation prefix.
+     *
+     * @return string
+     */
     protected static function getLowerCaseClassName()
     {
         $refClass = new \ReflectionClass(get_called_class());
@@ -26,15 +31,15 @@ trait StatusableEntity
     /**
      * Returns status list, with or without labels.
      *
-     * @param bool  $withLabels
+     * @param bool  $withLabelsAsIndexes
      * @param array $filterStatus
      *
      * @return array
      */
-    public static function getStatusList($withLabels = false, array $filterStatus = null)
+    public static function getStatusList($withLabelsAsIndexes = false, array $filterStatus = null)
     {
         // Build $statusValues if this is the first call
-        if (static::$statusValues === null) {
+        if (null === static::$statusValues) {
             static::$statusValues = array();
             $refClass = new \ReflectionClass(get_called_class());
             $classConstants = $refClass->getConstants();
@@ -57,11 +62,11 @@ trait StatusableEntity
             }, ARRAY_FILTER_USE_KEY);
         }
 
-        if ($withLabels) {
-            return $statusValues;
-        } else {
-            return array_keys($statusValues);
+        if ($withLabelsAsIndexes) {
+            return array_flip($statusValues);
         }
+
+        return array_keys($statusValues);
     }
 
     /**
@@ -133,6 +138,13 @@ trait StatusableEntity
         return array_values($statusList);
     }
 
+    /**
+     * Chacks that a value is a valid status.
+     *
+     * @param string $status
+     *
+     * @throws \InvalidArgumentException
+     */
     protected static function checkAllowedStatus($status)
     {
         if (!in_array($status, static::getStatusList())) {
@@ -161,9 +173,9 @@ trait StatusableEntity
 
         if ($strict) {
             return $entityStatusIdx > $comparedStatusIdx;
-        } else {
-            return $entityStatusIdx >= $comparedStatusIdx;
         }
+
+        return $entityStatusIdx >= $comparedStatusIdx;
     }
 
     /**
@@ -198,9 +210,9 @@ trait StatusableEntity
 
         if ($strict) {
             return $entityStatusIdx < $comparedStatusIdx;
-        } else {
-            return $entityStatusIdx <= $comparedStatusIdx;
         }
+
+        return $entityStatusIdx <= $comparedStatusIdx;
     }
 
     /**
@@ -249,7 +261,7 @@ trait StatusableEntity
      */
     public function getStatusLabel()
     {
-        $statusList = $this->getStatusList(true);
+        $statusList = array_flip($this->getStatusList(true));
 
         return isset($statusList[$this->status]) ? $statusList[$this->status] : $this->status;
     }
